@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/qml/main.qml</file>
+        <file>src/qml/content/ButtonPage.qml</file>
+        <file>src/qml/content/ListPage.qml</file>
+        <file>src/qml/content/ProgressBarPage.qml</file>
+        <file>src/qml/content/SliderPage.qml</file>
+        <file>src/qml/content/TabBarPage.qml</file>
+        <file>src/qml/content/TextInputModel.qml</file>
+        <file>src/qml/content/TextInputPage.qml</file>
+        <file>src/qml/images/button_default.png</file>
+        <file>src/qml/images/button_pressed.png</file>
+        <file>src/qml/images/navigation_next_item.png</file>
+        <file>src/qml/images/navigation_previous_item.png</file>
+        <file>src/qml/images/NOTICE.txt</file>
+        <file>src/qml/images/tab_selected.png</file>
+        <file>src/qml/images/tabs_standard.png</file>
+        <file>src/qml/images/textinput.png</file>
+        <file>src/qml/images/toolbar.png</file>
+        <file>src/qml/content/AndroidDelegate.qml</file>
+        <file>src/qml/content/InputOutOfRange.qml</file>
+        <file>src/qml/images/my_text_box.png</file>
+        <file>src/qml/content/PageListModel.qml</file>
+        <file>src/qml/content/MySpacer.qml</file>
+        <file>src/qml/content/ScreenSizeHandler.qml</file>
+    </qresource>
+</RCC>
