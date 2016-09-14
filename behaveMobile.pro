@@ -77,4 +77,4 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/src/android
