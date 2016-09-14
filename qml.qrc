@@ -4,8 +4,6 @@
         <file>src/qml/content/ButtonPage.qml</file>
         <file>src/qml/content/ListPage.qml</file>
         <file>src/qml/content/ProgressBarPage.qml</file>
-        <file>src/qml/content/SliderPage.qml</file>
-        <file>src/qml/content/TabBarPage.qml</file>
         <file>src/qml/content/TextInputModel.qml</file>
         <file>src/qml/content/TextInputPage.qml</file>
         <file>src/qml/images/button_default.png</file>
