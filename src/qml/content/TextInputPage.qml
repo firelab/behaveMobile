@@ -64,6 +64,9 @@ Flickable
     height: parent.height
     contentWidth: myContentColumn.width
     contentHeight: myContentColumn.height + 10
+
+    bottomMargin: Qt.inputMethod.visible ? Qt.inputMethod.keyboardRectangle.height : 0
+
     //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
@@ -90,12 +93,6 @@ Flickable
             to: 0
             duration: 3000
         }
-    }
-
-    Keys.onBackPressed:
-    {
-        screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
-        console.log("back button pressed!")
     }
 
     function isInputInBounds(myModel)
@@ -263,21 +260,6 @@ Flickable
         }
     }
 
-    onFocusChanged:
-    {
-        if(activeFocus)
-        {
-            //console.log("Focus is on textInputContainer...resizing keyboard")
-            screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
-        }
-    }
-
-    ScreenSizeHandler
-    {
-        // handles resizing screen for soft keyboard
-        id: screenSizeHandler
-    }
-
     InputOutOfRange
     {
         id: myOutOfRangeDialog
@@ -289,22 +271,6 @@ Flickable
         spacing: 30
         //anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
-
-        onFocusChanged:
-        {
-            if(activeFocus)
-            {
-                console.log("Focus is on myContentColumn...resizing keyboard")
-                screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
-            }
-        }
-
-        Keys.onBackPressed:
-        {
-            screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
-            console.log("back button pressed!")
-        }
-
 
         Row
         {
@@ -347,7 +313,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: IntValidator{bottom: -999999; top: 999999;}
+                validator: IntValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -363,8 +329,6 @@ Flickable
                     fuelModelNumberModel.text = text
                     if(activeFocus)
                     {
-                        //console.log("Focus changed to active on fuelModelNumberText")
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
                         style = touchStyleSelected
                         if(text !== "")
                         {
@@ -388,17 +352,6 @@ Flickable
                     updateIsMoistureInputNeeded()
                     textInputContainer.forceActiveFocus()
                     Qt.inputMethod.hide()
-                }
-
-                Keys.onMenuPressed:
-                {
-                    //screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
-                    console.log("menu pressed!")
-                }
-                Keys.onYesPressed:
-                {
-                    //screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
-                    console.log("yes pressed!")
                 }
             }
         }
@@ -438,7 +391,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -446,11 +399,6 @@ Flickable
                 }
                 onFocusChanged:
                 {
-                    if(activeFocus)
-                    {
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
-                    }
-
                     updateMoistureInputStyle(oneHourMoistureModel, oneHourMoistureText)
                     if(text !== "" && oneHourMoistureModel.isFuelMoistureNeeded)
                     {
@@ -466,10 +414,6 @@ Flickable
                     }
                     textInputContainer.forceActiveFocus()
                     Qt.inputMethod.hide()
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
                 Component.onCompleted:
                 {
@@ -512,7 +456,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -520,11 +464,6 @@ Flickable
                 }
                 onFocusChanged:
                 {
-                    if(activeFocus)
-                    {
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
-                    }
-
                     updateMoistureInputStyle(tenHourMoistureModel, tenHourMoistureText)
                     if(text !== "" && tenHourMoistureModel.isFuelMoistureNeeded)
                     {
@@ -540,10 +479,6 @@ Flickable
                     }
                     Qt.inputMethod.hide()
                     textInputContainer.forceActiveFocus()
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
                 Component.onCompleted:
                 {
@@ -586,7 +521,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -594,11 +529,6 @@ Flickable
                 }
                 onFocusChanged:
                 {
-                    if(activeFocus)
-                    {
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
-                    }
-
                     updateMoistureInputStyle(hundredHourMoistureModel, hundredHourMoistureText)
                     if(text !== "" && hundredHourMoistureModel.isFuelMoistureNeeded)
                     {
@@ -614,10 +544,6 @@ Flickable
                     }
                     Qt.inputMethod.hide()
                     textInputContainer.forceActiveFocus()
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
                 Component.onCompleted:
                 {
@@ -660,7 +586,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -668,11 +594,6 @@ Flickable
                 }
                 onFocusChanged:
                 {
-                    if(activeFocus)
-                    {
-                         screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
-                    }
-
                     updateMoistureInputStyle(liveHerbaceousMoistureModel, liveHerbaceousMoistureText)
                     if(text !== "" && liveHerbaceousMoistureModel.isFuelMoistureNeeded)
                     {
@@ -687,10 +608,6 @@ Flickable
                         processInput(liveHerbaceousMoistureModel)
                         textInputContainer.forceActiveFocus()
                     }
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
                 Component.onCompleted:
                 {
@@ -734,7 +651,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -742,11 +659,6 @@ Flickable
                 }
                 onFocusChanged:
                 {
-                    if(activeFocus)
-                    {
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
-                    }
-
                     updateMoistureInputStyle(liveWoodyMoistureModel, liveWoodyMoistureText)
                     if(text !== "" && liveWoodyMoistureModel.isFuelMoistureNeeded)
                     {
@@ -761,10 +673,6 @@ Flickable
                         processInput(liveWoodyMoistureModel)
                         textInputContainer.forceActiveFocus()
                     }
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
                 Component.onCompleted:
                 {
@@ -808,7 +716,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -818,7 +726,6 @@ Flickable
                 {
                     if(activeFocus)
                     {
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
                         style = touchStyleSelected
                     }
                     else
@@ -838,10 +745,6 @@ Flickable
                         processInput(windSpeedModel)
                         textInputContainer.forceActiveFocus()
                     }
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
             }
         }
@@ -881,7 +784,7 @@ Flickable
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{bottom: -999999; top: 999999;}
+                validator: DoubleValidator{bottom: 1; top: 999999;}
 
                 onTextChanged:
                 {
@@ -891,7 +794,6 @@ Flickable
                 {
                     if(activeFocus)
                     {
-                        screenSizeHandler.resizeContentForKeyboard(textInputContainer, myContentColumn)
                         style = touchStyleSelected
                     }
                     else
@@ -911,10 +813,6 @@ Flickable
                         processInput(slopeModel)
                         textInputContainer.forceActiveFocus()
                     }
-                }
-                Keys.onBackPressed:
-                {
-                    screenSizeHandler.resetContentHeight(textInputContainer, myContentColumn)
                 }
             }
         }

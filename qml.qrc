@@ -20,6 +20,5 @@
         <file>src/qml/images/my_text_box.png</file>
         <file>src/qml/content/PageListModel.qml</file>
         <file>src/qml/content/MySpacer.qml</file>
-        <file>src/qml/content/ScreenSizeHandler.qml</file>
     </qresource>
 </RCC>
