@@ -70,11 +70,11 @@ Flickable
     //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
-    property int keyboardSize: 0
+    property int maxInputLabelWidth: liveWoodyMoistureLabel.width
 
     signal userInputChanged(string myInput, int myInputSignal)
 
-    property bool isInBounds: false
+    //property bool isInBounds: false
 
     property real progress: 0
     SequentialAnimation on progress
@@ -184,7 +184,7 @@ Flickable
 
     function processInput(myModel)
     {
-        isInBounds = isInputInBounds(myModel)
+        var isInBounds = isInputInBounds(myModel)
         if(isInBounds)
         {
             behave.userInputChanged(myModel.text, myModel.myInputSignal)
@@ -291,7 +291,7 @@ Flickable
                 text: fuelModelNumberModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -369,7 +369,7 @@ Flickable
                 text: oneHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -434,7 +434,7 @@ Flickable
                 text: tenHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -499,7 +499,7 @@ Flickable
                 text: hundredHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -565,7 +565,7 @@ Flickable
                 text: liveHerbaceousMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -694,7 +694,7 @@ Flickable
                 text: windSpeedModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -762,7 +762,7 @@ Flickable
                 text: slopeModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -862,7 +862,7 @@ Flickable
                 text: spreadRateModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
 
             Label
@@ -904,7 +904,7 @@ Flickable
                 text: "test1Label"
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
             TextField
             {
@@ -930,7 +930,7 @@ Flickable
                 text: "test2Label"
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
             TextField
             {
@@ -956,7 +956,7 @@ Flickable
                 text: "test3Label"
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
             TextField
             {
@@ -982,7 +982,7 @@ Flickable
                 text: "test4Label"
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
             TextField
             {
@@ -1008,7 +1008,7 @@ Flickable
                 text: "test5Label"
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
             TextField
             {
@@ -1034,7 +1034,7 @@ Flickable
                 text: "test6Label"
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: liveWoodyMoistureLabel.width
+                width: maxInputLabelWidth
             }
             TextField
             {
