@@ -839,7 +839,7 @@ Flickable
                     if(isAllInputInBounds)
                     {
                         behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
-                        spreadRateModel.text = Math.round(behave.display * 10) * 0.10
+                        spreadRateModel.text = Math.round(behave.display * 10) / 10
                         spreadRateText.text = spreadRateModel.text
                     }
                     textInputContainer.forceActiveFocus()
