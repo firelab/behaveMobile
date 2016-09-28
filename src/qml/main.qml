@@ -74,7 +74,7 @@ ApplicationWindow
         border.bottom: 8
         source: "images/toolbar.png"
         width: parent.width
-        height: 100
+        height: titleText.paintedHeight + 20
 
         Rectangle
         {
@@ -105,7 +105,8 @@ ApplicationWindow
 
         Text
         {
-            font.pointSize: 40
+            id: titleText
+            font.pointSize: 30
             Behavior on x { NumberAnimation{ easing.type: Easing.OutCubic} }
             x: backButton.x + backButton.width + 20
             anchors.verticalCenter: parent.verticalCenter
@@ -134,7 +135,7 @@ ApplicationWindow
         property int lower: 1
         property int upper: 60
         property string myUnits: "%"
-        property string myName: "One Hour Moisture"
+        property string myName: "1 Hour Moisture"
         readonly property int myInputSignal: BehaveQML.OneHourMoistureSignal
 
         text: ""
@@ -148,7 +149,7 @@ ApplicationWindow
         property int lower: 1
         property int upper: 60
         property string myUnits: "%"
-        readonly property string myName: "Ten Hour Moisture"
+        readonly property string myName: "10 Hour Moisture"
         readonly property int myInputSignal: BehaveQML.TenHourMoistureSignal
 
         text: ""
@@ -162,7 +163,7 @@ ApplicationWindow
         property int lower: 1
         property int upper: 60
         property string myUnits: "%"
-        readonly property string myName: "Hundred Hour Moisture"
+        readonly property string myName: "100 Hour Moisture"
         readonly property int myInputSignal: BehaveQML.HundredHourMoistureSignal
 
         text: ""
@@ -176,7 +177,7 @@ ApplicationWindow
         property int lower: 30
         property int upper: 300
         property string myUnits: "%"
-        readonly property string myName: "Live Herbaceous Moisture"
+        readonly property string myName: "Live Herb. Moisture"
         readonly property int myInputSignal: BehaveQML.LiveHerbaceousMoistureSignal
 
         text: ""
@@ -232,18 +233,28 @@ ApplicationWindow
         text: ""
     }
 
-    // Load the pages
+    // Load the pages 
     ListModel
     {
         id: pageModel
-
         ListElement
         {
+
             title: "Spread Rate Calculation"
             page: "content/TextInputPage.qml"
         }
-
+        ListElement
+        {
+            title: "Test1"
+            page: "content/TextInputPage.qml"
+        }
+        ListElement
+        {
+            title: "Test2"
+            page: "content/TextInputPage.qml"
+        }
     }
+
 
 
     StackView
@@ -266,19 +277,20 @@ ApplicationWindow
         {
             width: parent.width
             height: parent.height
+
             ListView
             {
                 model: pageModel
                 anchors.fill: parent
                 delegate: AndroidDelegate
                 {
-//                    Text
-//                    {
-//                        text: title
-//                        color: "white"
-//                        font.pointSize: 25
-//                    }
-                    text: title
+                    Text
+                    {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: " " + title
+                        color: "white"
+                        font.pointSize: 25
+                    }
                     onClicked: stackView.push(Qt.resolvedUrl(page))
                 }
             }

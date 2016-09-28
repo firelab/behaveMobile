@@ -71,7 +71,7 @@ Item
         id: textitem
         color: "white"
         font.pointSize: 25
-        text: modelData
+        //text: modelData
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 30
