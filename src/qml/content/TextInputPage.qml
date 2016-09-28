@@ -74,8 +74,6 @@ Flickable
 
     signal userInputChanged(string myInput, int myInputSignal)
 
-    //property bool isInBounds: false
-
     property real progress: 0
     SequentialAnimation on progress
     {
@@ -841,7 +839,7 @@ Flickable
                     if(isAllInputInBounds)
                     {
                         behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
-                        spreadRateModel.text = behave.display
+                        spreadRateModel.text = Math.round(behave.display * 10) * 0.10
                         spreadRateText.text = spreadRateModel.text
                     }
                     textInputContainer.forceActiveFocus()
