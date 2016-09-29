@@ -829,7 +829,7 @@ Flickable
                 visible: false
                 id: longestUnitLabel
                 anchors.verticalCenter: parent.verticalCenter
-                text: longestUnitLable.myUnits
+                text: longestUnitLableModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
             }

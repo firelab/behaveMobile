@@ -195,7 +195,7 @@ ApplicationWindow
 
     TextInputModel
     {
-        id: longestUnitLable
+        id: longestUnitLableModel
         property string myUnits: "ch/h"
 
         readOnly: true
