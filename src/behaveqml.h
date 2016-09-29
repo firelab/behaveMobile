@@ -18,7 +18,9 @@ std::string my_to_string(T value)
 class BehaveQML : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString display READ display WRITE setDisplay  NOTIFY displayChanged) // Test
+    //Q_PROPERTY(QString display READ display WRITE setDisplay  NOTIFY displayChanged) // Test
+    Q_PROPERTY(QString spreadRate READ spreadRate)
+    Q_PROPERTY(QString flameLength READ flameLength)
 
 public:
     BehaveQML(QObject* parent = 0);
@@ -31,37 +33,34 @@ public:
 
     Q_ENUM(InputSignal)
 
-    QString display() const { return display_; }
+    //QString display() const { return display_; }
+    QString spreadRate() const { return spreadRate_; }
+    QString flameLength() const { return flameLength_; }
 
     void setRootObject(QObject* root);
 
 public slots:
-    void  userInputChanged(const QString&, const BehaveQML::InputSignal&);
-    void setDisplay(const QString& display);
+    void userInputChanged(const QString&, const BehaveQML::InputSignal&);
+    //void setDisplay(const QString& display); // Test
+    //void setSpreadRate(const QString& spreadRate);
+    //void setFlameLength(const QString& spreadRate);
+
     bool isFuelMoistureNeeded(const int& fuelModelNumber,  const BehaveQML::InputSignal&);
-//    void fuelModelInputChanged(const QString& text);
-//    void oneHourMoistureInputChanged(const QString& text);
-//    void tenHourMoistureInputChanged(const QString& text);
-//    void hundredHourMoistureInputChanged(const QString& text);
-//    void liveHerbaceousMoistureInputChanged(const QString& text);
-//    void liveWoodyMoistureInputChanged(const QString& text);
-//    void windSpeedInputChanged(const QString& text);
-//    void slopeInputChanged(const QString& text);
     void calculateClicked();
 
 signals:
-    // Test
-    void displayChanged(const BehaveQML::InputSignal&);
-
+    //void displayChanged(const BehaveQML::InputSignal&); // Test
 private slots:
-    void onDisplayChanged(const BehaveQML::InputSignal&);
+    //void onDisplayChanged(const BehaveQML::InputSignal&); // Test
 
 private:
 
     QObject *root_;
     FuelModelSet fuelModelSet;
     BehaveRun behaveRun;
-    QString display_; // Test
+    //QString display_; // Test
+    QString spreadRate_;
+    QString flameLength_;
 };
 
 #endif // BEHAVEQML_H

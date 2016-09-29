@@ -21,6 +21,7 @@ Flickable
     boundsBehavior: Flickable.StopAtBounds
 
     property int maxInputLabelWidth: liveWoodyMoistureLabel.width
+    property int maxUnitLabelWidth: longestUnitLabel.width
 
     signal userInputChanged(string myInput, int myInputSignal)
 
@@ -457,7 +458,7 @@ Flickable
                 text: hundredHourMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
@@ -523,7 +524,7 @@ Flickable
                 text: liveHerbaceousMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
@@ -587,7 +588,7 @@ Flickable
                 text: liveWoodyMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
@@ -652,7 +653,7 @@ Flickable
                 text: windSpeedModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
@@ -720,7 +721,7 @@ Flickable
                 text: slopeModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
@@ -780,7 +781,6 @@ Flickable
                 //height: calculateButton.text.height
                 //width: calculateButton.text.width
 
-
                 onClicked:
                 {
                     forceActiveFocus()
@@ -788,9 +788,11 @@ Flickable
 
                     if(isAllInputInBounds)
                     {
+                        // Signal to behave to do calculations
                         behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
-                        spreadRateModel.text = Math.round(behave.display * 10) / 10
-                        spreadRateText.text = spreadRateModel.text
+                        // Get needed outputs
+                        spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
+                        flameLengthText.text = Math.round(behave.flameLength * 10) / 10
                     }
                     textInputContainer.forceActiveFocus()
                 }
@@ -822,6 +824,16 @@ Flickable
                 color: "white"
             }
 
+            Label
+            {
+                visible: false
+                id: longestUnitLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: longestUnitLable.myUnits
+                font.pointSize: myStyleModel.font.pointSize
+                color: "white"
+            }
+
             TextField
             {
                 id: spreadRateText
@@ -831,11 +843,45 @@ Flickable
                 style: touchStyle
 
                 readOnly: true
+            }
+        }
 
-                onTextChanged:
-                {
-                    text = spreadRateText.text
-                }
+        Row
+        {
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 20
+            MySpacer{}
+
+            Label
+            {
+                id: flameLengthLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: flameLengthModel.myName
+                font.pointSize: myStyleModel.font.pointSize
+                color: "white"
+                width: maxInputLabelWidth
+            }
+
+            Label
+            {
+                id: flameLengthUnitLabel
+                anchors.verticalCenter: parent.verticalCenter
+                text: flameLengthModel.myUnits
+                font.pointSize: myStyleModel.font.pointSize
+                color: "white"
+                width: maxUnitLabelWidth
+            }
+
+            TextField
+            {
+                id: flameLengthText
+                anchors.verticalCenter: parent.verticalCenter
+                font.pointSize: myStyleModel.font.pointSize
+                anchors.margins: 25
+                text:  flameLengthModel.text
+                style: touchStyle
+
+                readOnly: true
             }
         }
 
@@ -916,85 +962,6 @@ Flickable
                 style: touchStyle
             }
         }
-
-        Row
-        {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            MySpacer{}
-
-            Label
-            {
-                id: test4Label
-                anchors.verticalCenter: parent.verticalCenter
-                text: "test4Label"
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: maxInputLabelWidth
-            }
-            TextField
-            {
-                id: test4Text
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
-                text: "test4Text"
-                style: touchStyle
-            }
-        }
-
-        Row
-        {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            MySpacer{}
-
-            Label
-            {
-                id: test5Label
-                anchors.verticalCenter: parent.verticalCenter
-                text: "test5Label"
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: maxInputLabelWidth
-            }
-            TextField
-            {
-                id: test5Text
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
-                text: "test5Text"
-                style: touchStyle
-            }
-        }
-
-        Row
-        {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            MySpacer{}
-
-            Label
-            {
-                id: test6Label
-                anchors.verticalCenter: parent.verticalCenter
-                text: "test6Label"
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: maxInputLabelWidth
-            }
-            TextField
-            {
-                id: test6Text
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
-                text: "test6Text"
-                style: touchStyle
-            }
-        }
-
     }
 
     TextInputModel

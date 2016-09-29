@@ -3,11 +3,13 @@
 
 BehaveQML::BehaveQML(QObject *parent)
     : QObject(parent), root_(0),
-      display_(),
-      behaveRun(fuelModelSet)
+      behaveRun(fuelModelSet),
+      spreadRate_(),
+      flameLength_()
+
 {
-    display_ = "";
-    connect(this, SIGNAL(displayChanged(const BehaveQML::InputSignal&)), this, SLOT(onDisplayChanged(const BehaveQML::InputSignal&)));
+    spreadRate_ = "";
+    flameLength_ = "";
 }
 
 BehaveQML::~BehaveQML()
@@ -21,23 +23,16 @@ void BehaveQML::setRootObject(QObject *root)
     if (root_ != 0) root_->disconnect(this);
 
     root_ = root;
-
-    if (root_)
-    {
-        // setup new connections
-        connect(root_, SIGNAL(userInputChanged(const QString&, const BehaveQML::InputSignal&)), this, SLOT(userInputChanged(const QString&, const InputSignal&)));
-    }
 }
 
 // Slot
-void BehaveQML::setDisplay(const QString &display)
-{
-    if (display_ != display)
-    {
-        display_ = display;
-        //emit displayChanged();
-    }
-}
+//void BehaveQML::setDisplay(const QString &display)
+//{
+//    if (display_ != display)
+//    {
+//        display_ = display;
+//    }
+//}
 
 // Slot
 bool BehaveQML::isFuelMoistureNeeded(const int& fuelModelNumber,  const BehaveQML::InputSignal& inputSignal)
@@ -72,7 +67,11 @@ bool BehaveQML::isFuelMoistureNeeded(const int& fuelModelNumber,  const BehaveQM
             load = behaveRun.getFuelLoadLiveWoody(fuelModelNumber);
             break;
         }
-
+        default:
+        {
+            // Something went wrong...
+            break;
+        }
     }
     if(load > 0)
     {
@@ -85,7 +84,7 @@ bool BehaveQML::isFuelMoistureNeeded(const int& fuelModelNumber,  const BehaveQM
 // Slot
 void BehaveQML::userInputChanged(const QString& text, const InputSignal& inputSignal)
 {
-    display_ = text;
+    //display_ = text;
 
     switch(inputSignal)
     {
@@ -133,9 +132,11 @@ void BehaveQML::userInputChanged(const QString& text, const InputSignal& inputSi
         {
             double directionOfInterest = 0;
             behaveRun.doSurfaceRunInDirectionOfInterest(directionOfInterest);
-            double spreadRate = behaveRun.getSurfaceFireSpreadRate();
-            display_ = QString::fromStdString(my_to_string(spreadRate));
-            emit displayChanged(inputSignal);
+            double localSpreadRate = behaveRun.getSurfaceFireSpreadRate();
+            double localFlameLength = behaveRun.getFlameLength();
+            spreadRate_ = QString::fromStdString(my_to_string(localSpreadRate));
+            flameLength_ = QString::fromStdString(my_to_string(localFlameLength));
+            //emit spreadRateChanged(inputSignal);
             break;
         }
         default:
@@ -147,68 +148,13 @@ void BehaveQML::userInputChanged(const QString& text, const InputSignal& inputSi
 
 // onDisplayChanged() ////////////////////////////////////////////////////////
 
-void BehaveQML::onDisplayChanged(const InputSignal& inputSignal)
-{
-    // push the new display value to QML
-    if (root_ && (inputSignal == CalculateSignal))
-    {
-        root_->setProperty("dummy", display_);
-    }
-}
-
-//void BehaveQML::fuelModelInputChanged(const QString& text)
+//void BehaveQML::onDisplayChanged(const InputSignal& inputSignal)
 //{
-//    int fuelModelNumber = text.toInt();
-//    behaveRun.setFuelModelNumber(fuelModelNumber);
-//}
-
-//// Slot
-//void BehaveQML::oneHourMoistureInputChanged(const QString& text)
-//{
-//    double oneHourMoisture = text.toDouble();
-//    behaveRun.setMoistureOneHour(oneHourMoisture);
-//}
-
-//// Slot
-//void BehaveQML::tenHourMoistureInputChanged(const QString& text)
-//{
-//    double tenHourMoisture = text.toDouble();
-//    behaveRun.setMoistureTenHour(tenHourMoisture);
-//}
-
-//// Slot
-//void BehaveQML::hundredHourMoistureInputChanged(const QString& text)
-//{
-//    double hundredHourMoisture = text.toDouble();
-//    behaveRun.setMoistureHundredHour(hundredHourMoisture);
-//}
-
-//// Slot
-//void BehaveQML::liveHerbaceousMoistureInputChanged(const QString& text)
-//{
-//    double liveHerbaceousMoisture = text.toDouble();
-//    behaveRun.setMoistureLiveHerbaceous(liveHerbaceousMoisture);
-//}
-
-//// Slot
-//void BehaveQML::liveWoodyMoistureInputChanged(const QString& text)
-//{
-//    double liveWoodyMoisture = text.toDouble();
-//    behaveRun.setMoistureLiveWoody(liveWoodyMoisture);
-//}
-
-//// Slot
-//void BehaveQML::windSpeedInputChanged(const QString& text)
-//{
-//    double windSpeed = text.toDouble();
-//    behaveRun.setWindSpeed(windSpeed);
-//}
-
-//// Slot
-//void BehaveQML::slopeInputChanged(const QString& text)
-//{
-//    double slope = text.toDouble();
-//    behaveRun.setSlope(slope);
+//    // push the new display value to QML
+//    if (root_ && (inputSignal == CalculateSignal))
+//    {
+//        root_->setProperty("dummy", display_);
+//    }
 //}
 
 // Slot
@@ -216,8 +162,4 @@ void BehaveQML::calculateClicked()
 {
     double directionOfInterest = 0;
     behaveRun.doSurfaceRunInDirectionOfInterest(directionOfInterest);
-    //double spreadRate = behaveRun.getSurfaceFireSpreadRate();
-
-    //ui.spreadRateLineEdit->setText(QString::number(spreadRate, 10, 2));
 }
-

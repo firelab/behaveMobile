@@ -183,6 +183,26 @@ ApplicationWindow
         text: ""
     }
 
+    TextInputModel
+    {
+        id: flameLengthModel
+        property string myUnits: "ft"
+        readonly property string myName: "Flame Length"
+
+        readOnly: true
+        text: ""
+    }
+
+    TextInputModel
+    {
+        id: longestUnitLable
+        property string myUnits: "ch/h"
+
+        readOnly: true
+        text: ""
+    }
+
+
     // Load the pages 
     ListModel
     {
