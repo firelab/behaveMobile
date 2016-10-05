@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.6
 import QtQuick.Controls 1.2
 import BehaveQMLEnum 1.0
 import QtQuick.Window 2.0
@@ -72,9 +72,12 @@ ApplicationWindow
 
         property int lower: 1
         property int upper: 255
-        readonly property string myName: "Fuel Model Number"
+        readonly property string myName: "Fuel Model"
         readonly property int myInputSignal: BehaveQML.FuelModelNumberSignal
         text: ""
+
+        property var model: ["FM1", "FM2", "FM3", "FM4", "FM5", "FM6", "FM7", "FM8", "FM9", "FM10", "FM11", "FM12", "FM13",
+                "GR1", "GR2", "GR3", "GR4", "GR5", "GR6", "GR7", "GR8", "GR9"]
     }
 
     TextInputModel
@@ -84,12 +87,29 @@ ApplicationWindow
         property bool isFuelMoistureNeeded: false
         property int lower: 1
         property int upper: 60
+        property int myDefault: 3
         property string myUnits: "%"
-        property string myName: "1 Hour Moisture"
+        property string myName: "1 Hour"
         readonly property int myInputSignal: BehaveQML.OneHourMoistureSignal
 
         text: ""
     }
+
+    MySpinBox
+    {
+        id: oneHourMoistureSpinBoxModel
+        visible: false
+
+        value: oneHourMoistureModel.myDefault
+        upper: oneHourMoistureModel.upper
+        lower: oneHourMoistureModel.lower
+
+        onValueChanged:
+        {
+            oneHourMoistureModel.text = value
+        }
+    }
+
 
     TextInputModel
     {
@@ -98,12 +118,29 @@ ApplicationWindow
         property bool isFuelMoistureNeeded: false
         property int lower: 1
         property int upper: 60
+        property int myDefault: 4
         property string myUnits: "%"
-        readonly property string myName: "10 Hour Moisture"
+        readonly property string myName: "10 Hour"
         readonly property int myInputSignal: BehaveQML.TenHourMoistureSignal
 
         text: ""
     }
+
+    MySpinBox
+    {
+        id: tenHourMoistureSpinBoxModel
+        visible: false
+
+        value: tenHourMoistureModel.myDefault
+        upper: tenHourMoistureModel.upper
+        lower: tenHourMoistureModel.lower
+
+        onValueChanged:
+        {
+            tenHourMoistureModel.text = value
+        }
+    }
+
 
     TextInputModel
     {
@@ -112,11 +149,27 @@ ApplicationWindow
         property bool isFuelMoistureNeeded: false
         property int lower: 1
         property int upper: 60
+        property int myDefault: 5
         property string myUnits: "%"
-        readonly property string myName: "100 Hour Moisture"
+        readonly property string myName: "100 Hour"
         readonly property int myInputSignal: BehaveQML.HundredHourMoistureSignal
 
         text: ""
+    }
+
+    MySpinBox
+    {
+        id: hundredHourMoistureSpinBoxModel
+        visible: false
+
+        value: hundredHourMoistureModel.myDefault
+        upper: hundredHourMoistureModel.upper
+        lower: hundredHourMoistureModel.lower
+
+        onValueChanged:
+        {
+            hundredHourMoistureModel.text = value
+        }
     }
 
     TextInputModel
@@ -126,11 +179,27 @@ ApplicationWindow
         property bool isFuelMoistureNeeded: false
         property int lower: 30
         property int upper: 300
+        property int myDefault: 60
         property string myUnits: "%"
-        readonly property string myName: "Live Herb. Moisture"
+        readonly property string myName: "Live Herb"
         readonly property int myInputSignal: BehaveQML.LiveHerbaceousMoistureSignal
 
         text: ""
+    }
+
+    MySpinBox
+    {
+        id: liveHerbaceousMoistureSpinBoxModel
+        visible: false
+
+        value: liveHerbaceousMoistureModel.myDefault
+        upper: liveHerbaceousMoistureModel.upper
+        lower: liveHerbaceousMoistureModel.lower
+
+        onValueChanged:
+        {
+            liveHerbaceousMoistureModel.text = value
+        }
     }
 
     TextInputModel
@@ -140,11 +209,27 @@ ApplicationWindow
         property bool isFuelMoistureNeeded: false
         property int lower: 30
         property int upper: 300
+        property int myDefault: 90
         property string myUnits: "%"
-        readonly property string myName: "Live Woody Moisture"
+        readonly property string myName: "Live Woody"
         readonly property int myInputSignal: BehaveQML.LiveWoodyMoistureSignal
 
         text: ""
+    }
+
+    MySpinBox
+    {
+        id: liveWoodyMoistureSpinBoxModel
+        visible: false
+
+        value: liveWoodyMoistureModel.myDefault
+        upper: liveWoodyMoistureModel.upper
+        lower: liveWoodyMoistureModel.lower
+
+        onValueChanged:
+        {
+            liveWoodyMoistureModel.text = value
+        }
     }
 
     TextInputModel
@@ -153,11 +238,27 @@ ApplicationWindow
 
         property int lower: 0
         property int upper: 40
+        property int myDefault: 5
         property string myUnits: "mi/h"
         readonly property string myName: "Wind Speed"
         readonly property int myInputSignal: BehaveQML.WindSpeedSignal
 
         text: ""
+    }
+
+    MySpinBox
+    {
+        id: windSpeedSpinBoxModel
+        visible: false
+
+        value: windSpeedModel.myDefault
+        upper: windSpeedModel.upper
+        lower: windSpeedModel.lower
+
+        onValueChanged:
+        {
+            windSpeedModel.text = value
+        }
     }
 
     TextInputModel
@@ -166,11 +267,27 @@ ApplicationWindow
 
         property int lower: 0
         property int upper: 604
+        property int myDefault: 0
         property string myUnits: "%"
         readonly property string myName: "Slope"
         readonly property int myInputSignal: BehaveQML.SlopeSignal
 
         text: ""
+    }
+
+    MySpinBox
+    {
+        id: slopeSpinBoxModel
+        visible: false
+
+        value: slopeModel.myDefault
+        upper: slopeModel.upper
+        lower: slopeModel.lower
+
+        onValueChanged:
+        {
+            slopeModel.text = value
+        }
     }
 
     TextInputModel
@@ -202,7 +319,6 @@ ApplicationWindow
         text: ""
     }
 
-
     // Load the pages 
     ListModel
     {
@@ -210,13 +326,13 @@ ApplicationWindow
         ListElement
         {
 
-            title: "Spread Rate Calculation"
+            title: "Text Boxes"
             page: "content/TextInputPage.qml"
         }
         ListElement
         {
-            title: "Test1"
-            page: "content/TextInputPage.qml"
+            title: "Combo Box and Spin Boxes"
+            page: "content/ComboBoxAndSpinBoxPage.qml"
         }
         ListElement
         {
@@ -224,8 +340,6 @@ ApplicationWindow
             page: "content/TextInputPage.qml"
         }
     }
-
-
 
     StackView
     {

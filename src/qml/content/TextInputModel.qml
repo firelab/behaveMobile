@@ -4,7 +4,7 @@ import QtQuick.Window 2.2
 
 TextField
 { 
-    font.pointSize: 18
+    font.pointSize: 16
     horizontalAlignment: Text.AlignHCenter
 
     visible: false

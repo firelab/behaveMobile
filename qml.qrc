@@ -18,5 +18,8 @@
         <file>src/qml/images/my_text_box.png</file>
         <file>src/qml/content/PageListModel.qml</file>
         <file>src/qml/content/MySpacer.qml</file>
+        <file>src/qml/content/ComboBoxAndSpinBoxPage.qml</file>
+        <file>src/qml/content/MySpinBox.qml</file>
+        <file>src/qml/content/MyComboBox.qml</file>
     </qresource>
 </RCC>

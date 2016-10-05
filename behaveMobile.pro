@@ -1,7 +1,7 @@
 TARGET = behavemobile
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick widgets
 
 OBJECTS_DIR = build
 MOC_DIR = build
