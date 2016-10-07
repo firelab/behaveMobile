@@ -22,5 +22,7 @@
         <file>src/qml/content/MySpinBox.qml</file>
         <file>src/qml/content/MyComboBox.qml</file>
         <file>src/qml/content/AllComboBoxesPage.qml</file>
+        <file>src/qml/content/ComboBoxAndTumblerPage.qml</file>
+        <file>src/qml/content/MyTumbler.qml</file>
     </qresource>
 </RCC>

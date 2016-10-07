@@ -339,6 +339,11 @@ ApplicationWindow
             title: "All Combo Boxes"
             page: "content/AllComboBoxesPage.qml"
         }
+        ListElement
+        {
+            title: "Combo Box and Tumblers"
+            page: "content/ComboBoxAndTumblerPage.qml"
+        }
     }
 
     StackView
