@@ -16,6 +16,17 @@ ComboBox
         myModel = inputObject.model
     }
 
+    function makeModelFromXtoN(inputObject, X, N)
+    {
+        if (X <= N)
+        {
+            for (var i = X; i <= N; i++)
+            {
+                inputObject.model.push(i)
+            }
+        }
+    }
+
     model: myModel
 
     font.pointSize: myStyleModel.font.pointSize

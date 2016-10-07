@@ -336,8 +336,8 @@ ApplicationWindow
         }
         ListElement
         {
-            title: "Test2"
-            page: "content/TextInputPage.qml"
+            title: "All Combo Boxes"
+            page: "content/AllComboBoxesPage.qml"
         }
     }
 
@@ -366,6 +366,7 @@ ApplicationWindow
             {
                 model: pageModel
                 anchors.fill: parent
+                bottomMargin: 20
                 delegate: AndroidDelegate
                 {
                     Text
@@ -373,7 +374,7 @@ ApplicationWindow
                         anchors.verticalCenter: parent.verticalCenter
                         text: " " + title
                         color: "white"
-                        font.pointSize: 25
+                        font.pointSize: 30
                     }
                     onClicked: stackView.push(Qt.resolvedUrl(page))
                 }

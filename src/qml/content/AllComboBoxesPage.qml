@@ -20,7 +20,7 @@ Flickable
     //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
-    property int maxInputLabelWidth: liveWoodyMoistureLabel.width + 30
+    property int maxInputLabelWidth: liveWoodyMoistureLabel.width
     property int maxUnitLabelWidth: longestUnitLabel.width
 
     signal userInputChanged(string myInput, int myInputSignal)
@@ -254,10 +254,7 @@ Flickable
         {
             //anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
-            MySpacer
-            {
-                id: fuelModelSpacer
-            }
+            MySpacer{}
 
             Label
             {
@@ -283,7 +280,6 @@ Flickable
             MyComboBox
             {
                 id: fuelModelComboBox
-                width: oneHourMoistureRow.width - fuelModelLabel.width - fuelModelUnitLabel.width - fuelModelSpacer.width - 60
                 onActivated:
                 {
                     var fuelModelNumber = mapToFuelModelNumber(currentIndex)
@@ -337,17 +333,35 @@ Flickable
                 width: spreadRateUnitLabel.width
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: oneHourMoistureSpinBoxView
-                upper: oneHourMoistureSpinBoxModel.upper
-                lower: oneHourMoistureSpinBoxModel.lower
-                value: oneHourMoistureSpinBoxModel.value
+                id: oneHourMoistureComboBox
 
-                onValueChanged:
+                Text
                 {
-                    oneHourMoistureSpinBoxModel.value = value
-//                    console.debug("one hour moisture is " + oneHourMoistureModel.text)
+                    id: oneHourMoistureComboBoxModel
+                    property var model: []
+                }
+
+                onActivated:
+                {
+                    oneHourMoistureModel.text = currentText
+                    console.debug("oneHourMoistureModel.text is " + oneHourMoistureModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
+                Component.onCompleted:
+                {
+                    makeModelFromXtoN(oneHourMoistureComboBoxModel, oneHourMoistureModel.lower, oneHourMoistureModel.upper)
+                    model = oneHourMoistureComboBoxModel.model
+                    if(oneHourMoistureModel.text === "")
+                    {
+                        currentIndex = oneHourMoistureModel.myDefault
+                    }
+                    else
+                    {
+                        currentIndex = oneHourMoistureModel.text - oneHourMoistureModel.lower
+                    }
                 }
             }
         }
@@ -377,17 +391,35 @@ Flickable
                 width: spreadRateUnitLabel.width
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: tenHourMoistureSpinBoxView
-                upper: tenHourMoistureSpinBoxModel.upper
-                lower: tenHourMoistureSpinBoxModel.lower
-                value: tenHourMoistureSpinBoxModel.value
+                id: tenHourMoistureComboBox
 
-                onValueChanged:
+                Text
                 {
-                    tenHourMoistureSpinBoxModel.value = value
-//                    console.debug("ten hour moisture is " + tenHourMoistureModel.text)
+                    id: tenHourMoistureComboBoxModel
+                    property var model: []
+                }
+
+                onActivated:
+                {
+                    tenHourMoistureModel.text = currentText
+                    console.debug("tenHourMoistureModel.text is " + tenHourMoistureModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
+                Component.onCompleted:
+                {
+                    makeModelFromXtoN(tenHourMoistureComboBoxModel, tenHourMoistureModel.lower, tenHourMoistureModel.upper)
+                    model = tenHourMoistureComboBoxModel.model
+                    if(tenHourMoistureModel.text === "")
+                    {
+                        currentIndex = tenHourMoistureModel.myDefault
+                    }
+                    else
+                    {
+                        currentIndex = tenHourMoistureModel.text - tenHourMoistureModel.lower
+                    }
                 }
             }
         }
@@ -417,17 +449,35 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: hundredHourMoistureSpinBoxView
-                upper: hundredHourMoistureSpinBoxModel.upper
-                lower: hundredHourMoistureSpinBoxModel.lower
-                value: hundredHourMoistureSpinBoxModel.value
+                id: hudredHourMoistureComboBox
 
-                onValueChanged:
+                Text
                 {
-                    hundredHourMoistureSpinBoxModel.value = value
-//                    console.debug("hundred hour moisture is " + hundredHourMoistureModel.text)
+                    id: hudredHourMoistureComboBoxModel
+                    property var model: []
+                }
+
+                onActivated:
+                {
+                    hundredHourMoistureModel.text = currentText
+                    console.debug("hundredHourMoistureModel.text is " + hundredHourMoistureModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
+                Component.onCompleted:
+                {
+                    makeModelFromXtoN(hudredHourMoistureComboBoxModel, hundredHourMoistureModel.lower, hundredHourMoistureModel.upper)
+                    model = hudredHourMoistureComboBoxModel.model
+                    if(hundredHourMoistureModel.text === "")
+                    {
+                        currentIndex = hundredHourMoistureModel.myDefault
+                    }
+                    else
+                    {
+                        currentIndex = hundredHourMoistureModel.text - hundredHourMoistureModel.lower
+                    }
                 }
             }
         }
@@ -436,7 +486,7 @@ Flickable
         {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
-            MySpacer{}
+            width: oneHourMoistureRow.width
 
             Label
             {
@@ -458,17 +508,35 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: liveHerbaceousMoistureSpinBoxView
-                upper: liveHerbaceousMoistureSpinBoxModel.upper
-                lower: liveHerbaceousMoistureSpinBoxModel.lower
-                value: liveHerbaceousMoistureSpinBoxModel.value
+                id: liveHerbaceousMoistureComboBox
 
-                onValueChanged:
+                Text
                 {
-                    liveHerbaceousMoistureSpinBoxModel.value = value
-//                    console.debug("live herbaceous moisture is " + liveHerbaceousMoistureModel.text)
+                    id: liveHerbaceousMoistureComboBoxModel
+                    property var model: []
+                }
+
+                onActivated:
+                {
+                    liveHerbaceousMoistureModel.text = currentText
+                    console.debug("liveHerbaceousMoistureModel.text is " + liveHerbaceousMoistureModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
+                Component.onCompleted:
+                {
+                    makeModelFromXtoN(liveHerbaceousMoistureComboBoxModel, liveHerbaceousMoistureModel.lower, liveHerbaceousMoistureModel.upper)
+                    model = liveHerbaceousMoistureComboBoxModel.model
+                    if(liveHerbaceousMoistureModel.text === "")
+                    {
+                        currentIndex = liveHerbaceousMoistureModel.myDefault
+                    }
+                    else
+                    {
+                        currentIndex = liveHerbaceousMoistureModel.text - liveHerbaceousMoistureModel.lower
+                    }
                 }
             }
         }
@@ -477,7 +545,7 @@ Flickable
         {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
-            MySpacer{}
+            width: oneHourMoistureRow.width
 
             Label
             {
@@ -490,12 +558,6 @@ Flickable
 
             Label
             {
-                text: ""
-                width: 10
-            }
-
-            Label
-            {
                 id: liveWoodyMoistureUnitsLabel
                 anchors.verticalCenter: parent.verticalCenter
                 text: liveWoodyMoistureModel.myUnits
@@ -504,17 +566,35 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: liveWoodyMoistureSpinBoxView
-                upper: liveWoodyMoistureSpinBoxModel.upper
-                lower: liveWoodyMoistureSpinBoxModel.lower
-                value: liveWoodyMoistureSpinBoxModel.value
+                id: liveWoodyMoistureComboBox
 
-                onValueChanged:
+                Text
                 {
-                    liveWoodyMoistureSpinBoxModel.value = value
-//                    console.debug("live woody moisture is " + liveWoodyMoistureModel.text)
+                    id: liveWoodyMoistureComboBoxModel
+                    property var model: []
+                }
+
+                onActivated:
+                {
+                    liveWoodyMoistureModel.text = currentText
+                    console.debug("liveWoodyMoistureModel.text is " + liveWoodyMoistureModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
+                Component.onCompleted:
+                {
+                    makeModelFromXtoN(liveWoodyMoistureComboBoxModel, liveWoodyMoistureModel.lower, liveWoodyMoistureModel.upper)
+                    model = liveWoodyMoistureComboBoxModel.model
+                    if(tenHourMoistureModel.text === "")
+                    {
+                        currentIndex = liveWoodyMoistureModel.myDefault
+                    }
+                    else
+                    {
+                        currentIndex = liveWoodyMoistureModel.text - liveWoodyMoistureModel.lower
+                    }
                 }
             }
         }
@@ -523,7 +603,7 @@ Flickable
         {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
-            MySpacer{}
+            width: oneHourMoistureRow.width
 
             Label
             {
@@ -545,17 +625,35 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: windSpeedSpinBoxView
-                upper: windSpeedSpinBoxModel.upper
-                lower: windSpeedSpinBoxModel.lower
-                value: windSpeedSpinBoxModel.value
+                id: windSpeedComboBox
 
-                onValueChanged:
+                Text
                 {
-                    windSpeedSpinBoxModel.value = value
-//                    console.debug("wind speed is " + windSpeedModel.text)
+                    id: windSpeedComboBoxModel
+                    property var model: []
+                }
+
+                onActivated:
+                {
+                    windSpeedModel.text = currentText
+                    console.debug("windSpeedModel.text is " + windSpeedModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
+                Component.onCompleted:
+                {
+                    makeModelFromXtoN(windSpeedComboBoxModel, windSpeedModel.lower, windSpeedModel.upper)
+                    model = windSpeedComboBoxModel.model
+                    if(windSpeedModel.text === "")
+                    {
+                        currentIndex = windSpeedModel.myDefault
+                    }
+                    else
+                    {
+                        currentIndex = windSpeedModel.text - windSpeedModel.lower
+                    }
                 }
             }
         }
@@ -564,7 +662,7 @@ Flickable
         {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
-            MySpacer{}
+            width: oneHourMoistureRow.width
 
             Label
             {
@@ -586,23 +684,36 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MySpinBox
+            MyComboBox
             {
-                id: slopeSpinBoxView
-                upper: slopeSpinBoxModel.upper
-                lower: slopeSpinBoxModel.lower
-                value: slopeSpinBoxModel.value
+                id: slopeComboBox
 
-                onValueChanged:
+                Text
                 {
-                    slopeSpinBoxModel.value = value
-//                    console.debug("slope is " + slopeModel.text)
+                    id: slopeComboBoxModel
+                    property var model: []
                 }
+
+                onActivated:
+                {
+                    slopeModel.text = currentText
+                    //console.debug("windSpeedModel.text is " + slopeModel.text)
+                    textInputContainer.forceActiveFocus()
+                }
+
                 Component.onCompleted:
                 {
-                    // have to change value before setting to zero or its registered as null input
-                    value = 1
-                    value = slopeModel.myDefault
+                    makeModelFromXtoN(slopeComboBoxModel, slopeModel.lower, slopeModel.upper)
+                    model = slopeComboBoxModel.model
+                    if(slopeModel.text === "")
+                    {
+                        currentIndex = slopeModel.myDefault
+                        slopeModel.text = currentText
+                    }
+                    else
+                    {
+                        currentIndex = slopeModel.text - slopeModel.lower
+                    }
                 }
             }
         }

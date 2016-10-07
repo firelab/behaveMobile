@@ -967,6 +967,7 @@ Flickable
     TextInputModel
     {
         id: myStyleModel
+        font.pointSize: 25
         width: textInputContainer.width - liveHerbaceousMoistureLabel.width - spreadRateUnitLabel.width - 120
     }
 
