@@ -340,26 +340,21 @@ Flickable
                 width: spreadRateUnitLabel.width
             }
 
-            MyTumbler
+            Rectangle
             {
-                id: oneHourMoistureTumbler
-
-                Text
+                height: oneHourMoistureTumblerView.height
+                width: oneHourMoistureTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
+                MyTumbler
                 {
-                    id: oneHourMoistureTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(oneHourMoistureModel)
-                    makeAndSetModel(oneHourMoistureTumblerModel)
+                    id: oneHourMoistureTumblerView
+                    currentIndex: oneHourMoistureTumblerModel.currentIndex
+                    model: oneHourMoistureTumblerModel.model
 
-                    setCurrentIndex(oneHourMoistureModel.text - lower)
-
-                }
-                onCurrentIndexChanged:
-                {
-                    oneHourMoistureModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        oneHourMoistureTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }
@@ -389,27 +384,23 @@ Flickable
                 width: spreadRateUnitLabel.width
             }
 
-
-            MyTumbler
+            Rectangle
             {
-                id: tenHourMoistureTumbler
+                height: tenHourMoistureTumblerView.height
+                width: tenHourMoistureTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
 
-                Text
+                MyTumbler
                 {
-                    id: tenHourMoistureTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(tenHourMoistureModel)
-                    makeAndSetModel(tenHourMoistureTumblerModel)
+                    anchors.verticalCenter: parent.verticalCenter
+                    id: tenHourMoistureTumblerView
+                    currentIndex: tenHourMoistureTumblerModel.currentIndex
+                    model: tenHourMoistureTumblerModel.model
 
-                    setCurrentIndex(tenHourMoistureModel.text - lower)
-
-                }
-                onCurrentIndexChanged:
-                {
-                    tenHourMoistureModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        tenHourMoistureTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }
@@ -439,26 +430,21 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MyTumbler
+            Rectangle
             {
-                id: hundredHourMoistureTumbler
-
-                Text
+                height: hundredHourMoistureTumblerView.height
+                width: hundredHourMoistureTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
+                MyTumbler
                 {
-                    id: hundredHourMoistureTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(hundredHourMoistureModel)
-                    makeAndSetModel(hundredHourMoistureTumblerModel)
+                    id: hundredHourMoistureTumblerView
+                    currentIndex: hundredHourMoistureTumblerModel.currentIndex
+                    model: hundredHourMoistureTumblerModel.model
 
-                    setCurrentIndex(hundredHourMoistureModel.text - lower)
-
-                }
-                onCurrentIndexChanged:
-                {
-                    hundredHourMoistureModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        hundredHourMoistureTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }
@@ -488,26 +474,22 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MyTumbler
+            Rectangle
             {
-                id: liveHerbaceousMoistureTumbler
-
-                Text
+                height: liveHerbaceousMoistureTumblerView.height
+                width: liveHerbaceousMoistureTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
+                MyTumbler
                 {
-                    id: liveHerbaceousMoistureTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(liveHerbaceousMoistureModel)
-                    makeAndSetModel(liveHerbaceousMoistureTumblerModel)
+                    anchors.verticalCenter: parent.verticalCenter
+                    id: liveHerbaceousMoistureTumblerView
+                    currentIndex: liveHerbaceousMoistureTumblerModel.currentIndex
+                    model: liveHerbaceousMoistureTumblerModel.model
 
-                    setCurrentIndex(liveHerbaceousMoistureModel.text - lower)
-
-                }
-                onCurrentIndexChanged:
-                {
-                    liveHerbaceousMoistureModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        liveHerbaceousMoistureTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }
@@ -537,27 +519,22 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MyTumbler
+            Rectangle
             {
-                id: liveWoodyMoistureTumbler
-
-                Text
+                height: liveWoodyMoistureTumblerView.height
+                width: liveWoodyMoistureTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
+                MyTumbler
                 {
-                    id: liveWoodyMoistureTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(liveWoodyMoistureModel)
-                    makeAndSetModel(liveWoodyMoistureTumblerModel)
+                    anchors.verticalCenter: parent.verticalCenter
+                    id: liveWoodyMoistureTumblerView
+                    currentIndex: liveWoodyMoistureTumblerModel.currentIndex
+                    model: liveWoodyMoistureTumblerModel.model
 
-                    setCurrentIndex(liveWoodyMoistureModel.text - lower)
-                    transitions.animations.complete()
-
-                }
-                onCurrentIndexChanged:
-                {
-                    liveWoodyMoistureModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        liveWoodyMoistureTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }
@@ -587,25 +564,22 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MyTumbler
+            Rectangle
             {
-                id: windSpeedTumbler
+                height: windSpeedTumblerView.height
+                width: windSpeedTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
+                MyTumbler
+                {
+                    anchors.verticalCenter: parent.verticalCenter
+                    id: windSpeedTumblerView
+                    currentIndex: windSpeedTumblerModel.currentIndex
+                    model: windSpeedTumblerModel.model
 
-                Text
-                {
-                    id: windSpeedTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(windSpeedModel)
-                    makeAndSetModel(windSpeedTumblerModel)
-
-                    setCurrentIndex(windSpeedModel.text - lower)
-                }
-                onCurrentIndexChanged:
-                {
-                    windSpeedModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        windSpeedTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }
@@ -635,26 +609,22 @@ Flickable
                 width: maxUnitLabelWidth
             }
 
-            MyTumbler
+            Rectangle
             {
-                id: slopeTumbler
+                height: slopeTumblerView.height
+                width: slopeTumblerView.width
+                anchors.verticalCenter: parent.verticalCenter
+                MyTumbler
+                {
+                    anchors.verticalCenter: parent.verticalCenter
+                    id: slopeTumblerView
+                    currentIndex: slopeTumblerModel.currentIndex
+                    model: slopeTumblerModel.model
 
-                Text
-                {
-                    id: slopeTumblerModel
-                    property var model: []
-                }
-                Component.onCompleted:
-                {
-                    setModelBounds(slopeModel)
-                    makeAndSetModel(slopeTumblerModel)
-                    setCurrentIndex(slopeModel.text - lower)
-                    slopeModel.text = 1
-                    slopeModel.text = currentIndex
-                }
-                onCurrentIndexChanged:
-                {
-                    slopeModel.text = currentIndex + lower
+                    onCurrentIndexChanged:
+                    {
+                        slopeTumblerModel.currentIndex = currentIndex
+                    }
                 }
             }
         }

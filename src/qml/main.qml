@@ -110,6 +110,30 @@ ApplicationWindow
         }
     }
 
+    MyTumbler
+    {
+        id: oneHourMoistureTumblerModel
+        visible: false
+
+        Text
+        {
+            id: oneHourMoistureTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(oneHourMoistureModel)
+            makeAndSetModel(oneHourMoistureTumblerArray)
+            setCurrentIndex(oneHourMoistureModel.myDefault - lower)
+
+        }
+        onCurrentIndexChanged:
+        {
+            oneHourMoistureModel.text = currentIndex + lower
+        }
+    }
+
 
     TextInputModel
     {
@@ -123,7 +147,7 @@ ApplicationWindow
         readonly property string myName: "10 Hour"
         readonly property int myInputSignal: BehaveQML.TenHourMoistureSignal
 
-        text: ""
+        text: myDefault
     }
 
     MySpinBox
@@ -141,6 +165,30 @@ ApplicationWindow
         }
     }
 
+    MyTumbler
+    {
+        id: tenHourMoistureTumblerModel
+        visible: false
+
+        Text
+        {
+            id: tenHourMoistureTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(tenHourMoistureModel)
+            makeAndSetModel(tenHourMoistureTumblerArray)
+            setCurrentIndex(tenHourMoistureModel.myDefault - lower)
+
+        }
+        onCurrentIndexChanged:
+        {
+            tenHourMoistureModel.text = currentIndex + lower
+        }
+    }
+
 
     TextInputModel
     {
@@ -154,7 +202,7 @@ ApplicationWindow
         readonly property string myName: "100 Hour"
         readonly property int myInputSignal: BehaveQML.HundredHourMoistureSignal
 
-        text: ""
+        text: myDefault
     }
 
     MySpinBox
@@ -169,6 +217,29 @@ ApplicationWindow
         onValueChanged:
         {
             hundredHourMoistureModel.text = value
+        }
+    }
+
+    MyTumbler
+    {
+        id: hundredHourMoistureTumblerModel
+        visible: false
+
+        Text
+        {
+            id: hundredHourMoistureTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(hundredHourMoistureModel)
+            makeAndSetModel(hundredHourMoistureTumblerArray)
+            setCurrentIndex(hundredHourMoistureModel.myDefault - lower)
+        }
+        onCurrentIndexChanged:
+        {
+            hundredHourMoistureModel.text = currentIndex + lower
         }
     }
 
@@ -202,6 +273,30 @@ ApplicationWindow
         }
     }
 
+    MyTumbler
+    {
+        id: liveHerbaceousMoistureTumblerModel
+        visible: false
+
+        Text
+        {
+            id: liveHerbaceousMoistureTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(liveHerbaceousMoistureModel)
+            makeAndSetModel(liveHerbaceousMoistureTumblerArray)
+            setCurrentIndex(liveHerbaceousMoistureModel.myDefault - lower)
+
+        }
+        onCurrentIndexChanged:
+        {
+            liveHerbaceousMoistureModel.text = currentIndex + lower
+        }
+    }
+
     TextInputModel
     {
         id: liveWoodyMoistureModel
@@ -232,6 +327,30 @@ ApplicationWindow
         }
     }
 
+    MyTumbler
+    {
+        id: liveWoodyMoistureTumblerModel
+        visible: false
+
+        Text
+        {
+            id: liveWoodyMoistureTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(liveWoodyMoistureModel)
+            makeAndSetModel(liveWoodyMoistureTumblerArray)
+            setCurrentIndex(liveWoodyMoistureModel.myDefault - lower)
+        }
+        onCurrentIndexChanged:
+        {
+            liveWoodyMoistureModel.text = currentIndex + lower
+        }
+    }
+
+
     TextInputModel
     {
         id: windSpeedModel
@@ -258,6 +377,30 @@ ApplicationWindow
         onValueChanged:
         {
             windSpeedModel.text = value
+        }
+    }
+
+    MyTumbler
+    {
+        id: windSpeedTumblerModel
+        visible: false
+
+        Text
+        {
+            id: windSpeedTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(windSpeedModel)
+            makeAndSetModel(windSpeedTumblerArray)
+            setCurrentIndex(windSpeedModel.myDefault - lower)
+
+        }
+        onCurrentIndexChanged:
+        {
+            windSpeedModel.text = currentIndex + lower
         }
     }
 
@@ -289,6 +432,31 @@ ApplicationWindow
             slopeModel.text = value
         }
     }
+
+    MyTumbler
+    {
+        id: slopeTumblerModel
+        visible: false
+
+        Text
+        {
+            id: slopeTumblerArray
+            property var model: []
+        }
+
+        Component.onCompleted:
+        {
+            setProperties(slopeModel)
+            makeAndSetModel(slopeTumblerArray)
+            setCurrentIndex(slopeModel.myDefault - lower)
+
+        }
+        onCurrentIndexChanged:
+        {
+            slopeModel.text = currentIndex + lower
+        }
+    }
+
 
     TextInputModel
     {

@@ -4,17 +4,10 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.0
 
-Rectangle
+
+
+Tumbler
 {
-    height: myTumbler.height
-    width: myTumbler.width
-
-    property var model: myTumbler.myModel
-    property int currentIndex: myTumbler.currentIndex
-    property Item currentItem: myTumbler.currentItem
-    property int lower: -1
-    property int upper: -1
-
     function makeAndSetModel(inputObject)
     {
         for (var i = lower; i <= upper; i++)
@@ -24,10 +17,11 @@ Rectangle
         myTumbler.myModel = inputObject.model
     }
 
-    function setModelBounds(inputObject)
+    function setProperties(inputObject)
     {
         lower = inputObject.lower
         upper = inputObject.upper
+        myDefault = inputObject.myDefault
     }
 
     function setCurrentIndex(index)
@@ -36,94 +30,94 @@ Rectangle
         myTumbler.currentIndex = parseInt(index)
     }
 
-    Tumbler
+    id: myTumbler
+
+    property int lower: -1
+    property int upper: -1
+    property int myDefault: -1
+    property var myModel: [0]
+
+
+    anchors.verticalCenter: parent.verticalCenter
+
+    model: myModel
+    visibleItemCount: 3
+
+    font.pointSize: 30
+    height: sizeSettingText.paintedHeight * 0.80
+    width: sizeSettingText.paintedWidth
+
+    contentItem: ListView
     {
-        id: myTumbler
+        anchors.fill: parent
+        model: myTumbler.model
+        delegate: myTumbler.delegate
+        snapMode: ListView.SnapToItem
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        preferredHighlightBegin: height / 2 - (height / visibleItemCount / 2)
+        preferredHighlightEnd: height / 2  + (height / visibleItemCount / 2)
+        clip: true
+    }
 
-        anchors.verticalCenter: parent.verticalCenter
+    Text
+    {
+        // Invisible object used to set size of the tumbler
+        id: sizeSettingText
+        visible: false
+        font.pointSize: 100
+        text: "A"
+    }
 
-        property var myModel: [0]
-        model: myModel
-        visibleItemCount: 3
-
-        font.pointSize: 30
-        height: sizeSettingText.paintedHeight * 0.80
-        width: sizeSettingText.paintedWidth
-
-        contentItem: ListView
+    background: Item
+    {
+        Rectangle
         {
-            anchors.fill: parent
-            model: myTumbler.model
-            delegate: myTumbler.delegate
-            snapMode: ListView.SnapToItem
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            preferredHighlightBegin: height / 2 - (height / myTumbler.visibleItemCount / 2)
-            preferredHighlightEnd: height / 2  + (height / myTumbler.visibleItemCount / 2)
-            clip: true
-        }
-
-        Text
-        {
-            // Invisible object used to set size of the tumbler
-            id: sizeSettingText
-            visible: false
-            font.pointSize: 100
-            text: "A"
-        }
-
-        background: Item
-        {
-            Rectangle
-            {
-                opacity: myTumbler.enabled ? 0.2 : 0.1
-                border.color: "black"
-                width: parent.width
-                height: 1
-                anchors.top: parent.top
-            }
-
-            Rectangle
-            {
-                opacity: myTumbler.enabled ? 0.2 : 0.1
-                border.color: "white"
-                width: parent.width
-                height: 1
-                anchors.bottom: parent.bottom
-            }
-        }
-
-        delegate: Text
-        {
-            text: modelData
-            font: myTumbler.font
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            opacity: 1.0 - Math.abs(Tumbler.displacement) / (myTumbler.visibleItemCount / 2)
+            opacity: myTumbler.enabled ? 0.2 : 0.1
+            border.color: "black"
+            width: parent.width
+            height: 1
+            anchors.top: parent.top
         }
 
         Rectangle
         {
-            anchors.horizontalCenter: myTumbler.horizontalCenter
-//            y: myTumbler.height * 0.4 // Value for 5 visible items
-            y: myTumbler.height * 0.33 // Value for 3 visible items
-            width: sizeSettingText.paintedWidth * 0.66
-            height: 2
-            color: "black"
+            opacity: myTumbler.enabled ? 0.2 : 0.1
+            border.color: "white"
+            width: parent.width
+            height: 1
+            anchors.bottom: parent.bottom
         }
+    }
 
-        Rectangle
-        {
-            anchors.horizontalCenter: myTumbler.horizontalCenter
-//          y: myTumbler.height * 0.6 // Value for 5 visible items
-            y: myTumbler.height * 0.67 // Value for 3 visible items
-            width: sizeSettingText.paintedWidth * 0.66
-            height: 2
-            color: "black"
-        }
-        onCurrentIndexChanged:
-        {
-            parent.currentIndex = currentIndex
-        }
+    delegate: Text
+    {
+        id: myDelegate
+        text: modelData
+        font: myTumbler.font
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        opacity: 0.4 + (Math.max(0, 1 - Math.abs(Tumbler.displacement)) * 0.6)
 
     }
+
+    Rectangle
+    {
+        anchors.horizontalCenter: myTumbler.horizontalCenter
+//            y: myTumbler.height * 0.4 // Value for 5 visible items
+        y: myTumbler.height * 0.33 // Value for 3 visible items
+        width: sizeSettingText.paintedWidth * 0.66
+        height: 2
+        color: "black"
+    }
+
+    Rectangle
+    {
+        anchors.horizontalCenter: myTumbler.horizontalCenter
+//          y: myTumbler.height * 0.6 // Value for 5 visible items
+        y: myTumbler.height * 0.67 // Value for 3 visible items
+        width: sizeSettingText.paintedWidth * 0.66
+        height: 2
+        color: "black"
+    }
 }
+
