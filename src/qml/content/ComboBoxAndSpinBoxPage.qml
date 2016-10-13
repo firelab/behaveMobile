@@ -339,15 +339,18 @@ Flickable
 
             MySpinBox
             {
-                id: oneHourMoistureSpinBoxView
-                upper: oneHourMoistureSpinBoxModel.upper
-                lower: oneHourMoistureSpinBoxModel.lower
-                value: oneHourMoistureSpinBoxModel.value
+                id: oneHourMoistureSpinBox
 
+                upper: oneHourMoistureModel.upper
+                lower: oneHourMoistureModel.lower
+
+                Component.onCompleted:
+                {
+                    value = oneHourMoistureModel.text
+                }
                 onValueChanged:
                 {
-                    oneHourMoistureSpinBoxModel.value = value
-//                    console.debug("one hour moisture is " + oneHourMoistureModel.text)
+                    oneHourMoistureModel.text = value
                 }
             }
         }
@@ -382,12 +385,14 @@ Flickable
                 id: tenHourMoistureSpinBoxView
                 upper: tenHourMoistureSpinBoxModel.upper
                 lower: tenHourMoistureSpinBoxModel.lower
-                value: tenHourMoistureSpinBoxModel.value
 
+                Component.onCompleted:
+                {
+                     value = tenHourMoistureSpinBoxModel.value
+                }
                 onValueChanged:
                 {
                     tenHourMoistureSpinBoxModel.value = value
-//                    console.debug("ten hour moisture is " + tenHourMoistureModel.text)
                 }
             }
         }
@@ -617,7 +622,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Calculate"
                 //style: myButtonStyle
-                font.pointSize: myStyleModel.font.pointSize
+                font.pointSize: 40
 
                 property bool isAllInputInBounds: false
 
@@ -630,24 +635,19 @@ Flickable
                 {
                     forceActiveFocus()
 
-                    isAllInputInBounds = checkIfAllInputInBounds()
-                    if(isAllInputInBounds)
-                    {
-//                        console.debug("calculating!")
+                    processInput(oneHourMoistureModel)
+                    processInput(tenHourMoistureModel)
+                    processInput(hundredHourMoistureModel)
+                    processInput(liveHerbaceousMoistureModel)
+                    processInput(liveWoodyMoistureModel)
+                    processInput(windSpeedModel)
+                    processInput(slopeModel)
+                    // Signal to behave to do calculations
+                    behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
+                    // Get needed outputs
+                    spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
+                    flameLengthText.text = Math.round(behave.flameLength * 10) / 10
 
-                        processInput(oneHourMoistureModel)
-                        processInput(tenHourMoistureModel)
-                        processInput(hundredHourMoistureModel)
-                        processInput(liveHerbaceousMoistureModel)
-                        processInput(liveWoodyMoistureModel)
-                        processInput(windSpeedModel)
-                        processInput(slopeModel)
-                        // Signal to behave to do calculations
-                        behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
-                        // Get needed outputs
-                        spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
-                        flameLengthText.text = Math.round(behave.flameLength * 10) / 10
-                    }
                     textInputContainer.forceActiveFocus()
                 }
             }

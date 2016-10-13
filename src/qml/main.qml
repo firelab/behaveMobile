@@ -92,22 +92,7 @@ ApplicationWindow
         property string myName: "1 Hour"
         readonly property int myInputSignal: BehaveQML.OneHourMoistureSignal
 
-        text: ""
-    }
-
-    MySpinBox
-    {
-        id: oneHourMoistureSpinBoxModel
-        visible: false
-
-        value: oneHourMoistureModel.myDefault
-        upper: oneHourMoistureModel.upper
-        lower: oneHourMoistureModel.lower
-
-        onValueChanged:
-        {
-            oneHourMoistureModel.text = value
-        }
+        text: myDefault
     }
 
     MyTumbler
@@ -126,14 +111,13 @@ ApplicationWindow
             setProperties(oneHourMoistureModel)
             makeAndSetModel(oneHourMoistureTumblerArray)
             setCurrentIndex(oneHourMoistureModel.myDefault - lower)
-
         }
         onCurrentIndexChanged:
         {
+
             oneHourMoistureModel.text = currentIndex + lower
         }
     }
-
 
     TextInputModel
     {
@@ -181,7 +165,6 @@ ApplicationWindow
             setProperties(tenHourMoistureModel)
             makeAndSetModel(tenHourMoistureTumblerArray)
             setCurrentIndex(tenHourMoistureModel.myDefault - lower)
-
         }
         onCurrentIndexChanged:
         {
@@ -487,7 +470,7 @@ ApplicationWindow
         text: ""
     }
 
-    // Load the pages 
+    // Load the pages
     ListModel
     {
         id: pageModel

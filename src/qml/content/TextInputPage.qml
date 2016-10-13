@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Extras 1.4
 import QtQuick.Dialogs 1.1
 import BehaveQMLEnum 1.0
 import QtQuick.Window 2.2
@@ -287,7 +288,6 @@ Flickable
                     }
                     else
                     {
-                        //console.log("Focus changed to inactive on fuelModelNumberText")
                         style = touchStyle
                     }
                 }
@@ -298,6 +298,7 @@ Flickable
                         fuelModelNumberModel.text = text
                         processInput(fuelModelNumberModel)
                     }
+
                     updateIsMoistureInputNeeded()
                     textInputContainer.forceActiveFocus()
                     Qt.inputMethod.hide()
@@ -336,7 +337,7 @@ Flickable
                 id: oneHourMoistureText
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.margins: 20
-                text: oneHourMoistureModel.text
+
                 style: touchStyle
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -361,14 +362,44 @@ Flickable
                         oneHourMoistureModel.text = text
                         processInput(oneHourMoistureModel)
                     }
+
+
                     textInputContainer.forceActiveFocus()
                     Qt.inputMethod.hide()
                 }
                 Component.onCompleted:
                 {
+                     text = oneHourMoistureModel.text
                      updateMoistureInputStyle(oneHourMoistureModel, oneHourMoistureText)
                 }
             }
+
+//            This is a test of the older version of Tumbler with instantaneous setter function
+//            Tumbler
+//            {
+//                id: myTumbler
+
+//                anchors.verticalCenter: parent.verticalCenter
+
+//                TumblerColumn
+//                {
+//                      model: 300
+//                }
+//                //visibleItemCount: 3
+
+//                //font.pointSize: 30
+
+//                height: sizeSettingText.paintedHeight * 0.80
+//                width: sizeSettingText.paintedWidth
+
+//                Component.onCompleted:
+//                {
+//                    set the value of tumbler at colunm 0 to 200 in 0 milliseconds
+//                    setCurrentIndexAt(0, 200, 0)
+//                }
+//            }
+
+
         }
 
         Row
@@ -788,8 +819,18 @@ Flickable
 
                     if(isAllInputInBounds)
                     {
+                        // Process inputs
+                        processInput(oneHourMoistureModel)
+                        processInput(tenHourMoistureModel)
+                        processInput(hundredHourMoistureModel)
+                        processInput(liveHerbaceousMoistureModel)
+                        processInput(liveWoodyMoistureModel)
+                        processInput(windSpeedModel)
+                        processInput(slopeModel)
+
                         // Signal to behave to do calculations
                         behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
+
                         // Get needed outputs
                         spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
                         flameLengthText.text = Math.round(behave.flameLength * 10) / 10
