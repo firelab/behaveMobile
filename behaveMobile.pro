@@ -25,7 +25,7 @@ SOURCES += \
     src/behave/spotInputs.cpp \
     src/behave/surface.cpp \
     src/behave/surfaceFireReactionIntensity.cpp \
-    src/behave/surfaceFireSpread.cpp \
+    src/behave/surfaceFire.cpp \
     src/behave/surfaceFuelbedIntermediates.cpp \
     src/behave/surfaceInputs.cpp \
     src/behave/surfaceTwoFuelModels.cpp \
@@ -60,7 +60,7 @@ HEADERS += \
     src/behave/surface.h \
     src/behave/surfaceEnums.h \
     src/behave/surfaceFireReactionIntensity.h \
-    src/behave/surfaceFireSpread.h \
+    src/behave/surfaceFire.h \
     src/behave/surfaceFuelbedIntermediates.h \
     src/behave/surfaceInputs.h \
     src/behave/surfaceTwoFuelModels.h \

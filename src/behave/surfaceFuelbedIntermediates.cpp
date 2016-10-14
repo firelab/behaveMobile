@@ -190,6 +190,8 @@ void SurfaceFuelbedIntermediates::calculateFuelbedIntermediates(int fuelModelNum
     // Rothermel spread equation based on BEHAVE source code,
     // support for dynamic fuel models added 10/13/2004
 
+    const double PI = 3.14159265358979;
+
     //double ovendryFuelLoad = 0.0;           // Ovendry fuel loading, Rothermel 1972
     double optimumPackingRatio = 0.0;       // Optimum packing ratio, Rothermel 1972, equation 37
     bool isDynamic = false;                 // Whether or not fuel model is dynamic

@@ -4,7 +4,7 @@
 * Purpose:  Class for handling values associated with fuel models used in the
 *           Rothermel model
 * Author:   William Chatham <wchatham@fs.fed.us>
-* Credits:  Some of the code in this corresponding cpp file is, in part or in
+* Credits:  Some of the code in the corresponding cpp file is, in part or in
 *           whole, from BehavePlus5 source originally authored by Collin D.
 *           Bevins and is used with or without modification.
 *
@@ -56,7 +56,7 @@ public:
     std::string getFuelCode(int fuelModelNumber) const;
     std::string getFuelName(int fuelModelNumber) const;
     double getFuelbedDepth(int fuelModelNumber) const;
-    double getMoistureOfExtinctionDead(int fuelModelNumber) const;
+    double getMoistureOfExtinctionDead(int fuelModelNumber) const;;
     double getHeatOfCombustionDead(int fuelModelNumber) const;
     double getHeatOfCombustionLive(int fuelModelNumber) const;
     double getFuelLoadOneHour(int fuelModelNumber) const;
