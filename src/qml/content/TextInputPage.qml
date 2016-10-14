@@ -21,28 +21,19 @@ Flickable
     //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
-    property int maxInputLabelWidth: liveWoodyMoistureLabel.width
+    property int maxInputLabelWidth: longestInputLabel.width
     property int maxUnitLabelWidth: longestUnitLabel.width
+
 
     signal userInputChanged(string myInput, int myInputSignal)
 
-    property real progress: 0
-    SequentialAnimation on progress
+    Text
     {
-        loops: Animation.Infinite
-        running: true
-        NumberAnimation
-        {
-            from: 0
-            to: 1
-            duration: 3000
-        }
-        NumberAnimation
-        {
-            from: 1
-            to: 0
-            duration: 3000
-        }
+        id: longestInputLabel
+        visible: false
+        font.pointSize: myStyleModel.font.pointSize
+        text: "Flame Length  "
+
     }
 
     function isInputInBounds(myModel)
@@ -219,8 +210,7 @@ Flickable
     {
         id: myContentColumn
         spacing: 30
-        //anchors.centerIn: parent
-        anchors.horizontalCenter: parent.horizontalCenter
+        MySpacer{}
 
         Row
         {
@@ -230,7 +220,6 @@ Flickable
 
         Row
         {
-            //anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -308,7 +297,6 @@ Flickable
 
         Row
         {
-            //anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -534,7 +522,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -599,7 +586,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -610,6 +596,7 @@ Flickable
                 text: liveWoodyMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
+                width: maxInputLabelWidth
             }
 
             Label
@@ -663,7 +650,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -731,7 +717,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -806,11 +791,12 @@ Flickable
                 id: calculateButton
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Calculate"
+
                 style: myButtonStyle
                 property bool isAllInputInBounds: false
 
-                //height: calculateButton.text.height
-                //width: calculateButton.text.width
+                height: calculateButton.text.paintedHeight + 100
+                width: calculateButton.text.paintedWidth + 100
 
                 onClicked:
                 {
@@ -842,7 +828,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -889,7 +874,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -923,84 +907,6 @@ Flickable
                 style: touchStyle
 
                 readOnly: true
-            }
-        }
-
-        Row
-        {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            MySpacer{}
-
-            Label
-            {
-                id: test1Label
-                anchors.verticalCenter: parent.verticalCenter
-                text: "test1Label"
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: maxInputLabelWidth
-            }
-            TextField
-            {
-                id: test1Text
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
-                text: "test1Text"
-                style: touchStyle
-            }
-        }
-
-        Row
-        {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            MySpacer{}
-
-            Label
-            {
-                id: test2Label
-                anchors.verticalCenter: parent.verticalCenter
-                text: "test2Label"
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: maxInputLabelWidth
-            }
-            TextField
-            {
-                id: test2Text
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
-                text: "test2Text"
-                style: touchStyle
-            }
-        }
-
-        Row
-        {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 20
-            MySpacer{}
-
-            Label
-            {
-                id: test3Label
-                anchors.verticalCenter: parent.verticalCenter
-                text: "test3Label"
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: maxInputLabelWidth
-            }
-            TextField
-            {
-                id: test3Text
-                anchors.verticalCenter: parent.verticalCenter
-                font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
-                text: "test3Text"
-                style: touchStyle
             }
         }
     }
@@ -1144,8 +1050,8 @@ Flickable
         {
             panel: Item
             {
-                implicitHeight: calculateButtonText.paintedHeight + 10
-                implicitWidth: calculateButtonText.paintedWidth + 20
+                implicitHeight: calculateButtonText.paintedHeight + (calculateButtonText.paintedHeight / 3)
+                implicitWidth: calculateButtonText.paintedWidth + (calculateButtonText.paintedWidth / 3)
 
                 BorderImage
                 {
@@ -1163,7 +1069,7 @@ Flickable
                         text: control.text
                         anchors.centerIn: parent
                         color: "white"
-                        font.pointSize: 20
+                        font.pointSize: 30
                         renderType: Text.NativeRendering
                     }
                 }

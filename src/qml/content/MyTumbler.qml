@@ -97,7 +97,7 @@ Tumbler
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         opacity: 0.4 + (Math.max(0, 1 - Math.abs(Tumbler.displacement)) * 0.6)
-
+        scale: 1.0 + Math.max(0, 1 - Math.abs(Tumbler.displacement)) * 0.6
     }
 
     Rectangle

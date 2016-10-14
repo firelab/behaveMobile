@@ -33,7 +33,7 @@ ComboBox
 
     delegate: ItemDelegate
     {
-        width: myComboBox.width
+        width: myComboBox.width * 3
         text: modelData
         font.pointSize: myStyleModel.font.pointSize
         font.weight: myComboBox.currentIndex === index ? Font.DemiBold : Font.Normal
@@ -44,8 +44,10 @@ ComboBox
     {
         x: myComboBox.width - width - myComboBox.rightPadding
         y: myComboBox.topPadding + (myComboBox.availableHeight - height) / 2
-        width: 12
-        height: 8
+
+        property int indicatorHeight: (myComboBox.height / 2)
+        property int indicatorWidth: (myComboBox.width / 8)
+
         contextType: "2d"
 
         Connections
@@ -73,7 +75,7 @@ ComboBox
         text: myComboBox.displayText
         font: myComboBox.font
         color: myComboBox.pressed ? "grey" : "white";
-        horizontalAlignment: Text.AlignLeft
+        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
     }

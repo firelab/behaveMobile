@@ -20,29 +20,19 @@ Flickable
     //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
-    property int maxInputLabelWidth: liveWoodyMoistureLabel.width
+    property int maxInputLabelWidth: longestInputLabel.width
     property int maxUnitLabelWidth: longestUnitLabel.width
 
-    signal userInputChanged(string myInput, int myInputSignal)
-
-    property real progress: 0
-    SequentialAnimation on progress
+    Text
     {
-        loops: Animation.Infinite
-        running: true
-        NumberAnimation
-        {
-            from: 0
-            to: 1
-            duration: 3000
-        }
-        NumberAnimation
-        {
-            from: 1
-            to: 0
-            duration: 3000
-        }
+        id: longestInputLabel
+        visible: false
+        font.pointSize: myStyleModel.font.pointSize
+        text: "Flame Length  "
+
     }
+
+    signal userInputChanged(string myInput, int myInputSignal)
 
     property var comboBoxToFuelModelMapping: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                                               101, 102, 103, 104, 105, 106, 107, 108, 109]
@@ -241,18 +231,15 @@ Flickable
     {
         id: myContentColumn
         spacing: 30
-        //anchors.centerIn: parent
-        anchors.horizontalCenter: parent.horizontalCenter
+
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             MySpacer{}
         }
 
         Row
         {
-            //anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -484,9 +471,10 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             width: oneHourMoistureRow.width
+
+            MySpacer{}
 
             Label
             {
@@ -543,9 +531,10 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             width: oneHourMoistureRow.width
+
+            MySpacer{}
 
             Label
             {
@@ -554,6 +543,7 @@ Flickable
                 text: liveWoodyMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
+                width: maxInputLabelWidth
             }
 
             Label
@@ -601,9 +591,10 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             width: oneHourMoistureRow.width
+
+            MySpacer{}
 
             Label
             {
@@ -660,9 +651,10 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             width: oneHourMoistureRow.width
+
+            MySpacer{}
 
             Label
             {
@@ -761,7 +753,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -810,7 +801,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 

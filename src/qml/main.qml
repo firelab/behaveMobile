@@ -24,7 +24,7 @@ ApplicationWindow
         border.bottom: 8
         source: "images/toolbar.png"
         width: parent.width
-        height: titleText.paintedHeight + 20
+        height: titleText.paintedHeight + 50
 
         Rectangle
         {
@@ -35,8 +35,8 @@ ApplicationWindow
             opacity: stackView.depth > 1 ? 1 : 0
             anchors.verticalCenter: parent.verticalCenter
             antialiasing: true
-            height: 60
-            radius: 4
+            height: parent.height
+            radius: 10
             color: backmouse.pressed ? "#222" : "transparent"
             Behavior on opacity { NumberAnimation{} }
             Image
@@ -531,6 +531,7 @@ ApplicationWindow
                         text: " " + title
                         color: "white"
                         font.pointSize: 30
+                        height: text.paintedHeight + 30
                     }
                     onClicked: stackView.push(Qt.resolvedUrl(page))
                 }

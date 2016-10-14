@@ -28,30 +28,11 @@ Flickable
         id: longestInputLabel
         visible: false
         font.pointSize: myStyleModel.font.pointSize
-        text: "Wind Speed   "
+        text: "Flame Length  "
 
     }
 
     signal userInputChanged(string myInput, int myInputSignal)
-
-    property real progress: 0
-    SequentialAnimation on progress
-    {
-        loops: Animation.Infinite
-        running: true
-        NumberAnimation
-        {
-            from: 0
-            to: 1
-            duration: 3000
-        }
-        NumberAnimation
-        {
-            from: 1
-            to: 0
-            duration: 3000
-        }
-    }
 
     property var comboBoxToFuelModelMapping: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                                               101, 102, 103, 104, 105, 106, 107, 108, 109]
@@ -165,25 +146,7 @@ Flickable
 
     function processInput(myModel)
     {
-        //var isInBounds = isInputInBounds(myModel)
-        //if(isInBounds)
-        {
             behave.userInputChanged(myModel.text, myModel.myInputSignal)
-//            if (myModel.myInputSignal === BehaveQML.FuelModelNumberSignal)
-//            {
-//                oneHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.OneHourMoistureSignal)
-//                tenHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.TenHourMoistureSignal)
-//                hundredHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.HundredHourMoistureSignal)
-//                liveHerbaceousMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.LiveHerbaceousMoistureSignal)
-//                liveWoodyMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.LiveWoodyMoistureSignal)
-//            }
-//        }
-//        else
-//        {
-//            myOutOfRangeDialog.setProperties(myModel)
-//            myOutOfRangeDialog.open()
-//            myModel.text = ""
-        }
     }
 
     function updateIsMoistureInputNeeded()
@@ -249,21 +212,20 @@ Flickable
     Column
     {
         id: myContentColumn
-        spacing: 30
+        spacing: 20
         //anchors.centerIn: parent
-        anchors.horizontalCenter: parent.horizontalCenter
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             MySpacer{}
         }
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+
             MySpacer{}
+
             Label
             {
                 id: fuelModelLabel
@@ -317,8 +279,9 @@ Flickable
         Row
         {
             id: oneHourMoistureRow
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+
+            MySpacer{}
 
             Label
             {
@@ -362,7 +325,7 @@ Flickable
         Row
         {
             spacing: 20
-            anchors.horizontalCenter: parent.horizontalCenter
+            MySpacer{}
 
             Label
             {
@@ -407,7 +370,7 @@ Flickable
         Row
         {
             spacing: 20
-            anchors.horizontalCenter: parent.horizontalCenter
+            MySpacer{}
 
             Label
             {
@@ -450,8 +413,8 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+            MySpacer{}
 
             Label
             {
@@ -494,8 +457,8 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+            MySpacer{}
 
             Label
             {
@@ -538,8 +501,8 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+            MySpacer{}
 
             Label
             {
@@ -583,8 +546,8 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
+            MySpacer{}
 
             Label
             {
@@ -628,9 +591,7 @@ Flickable
 
         Row
         {
-
             anchors.horizontalCenter: parent.horizontalCenter
-
 
             Button
             {
@@ -671,7 +632,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
@@ -720,7 +680,6 @@ Flickable
 
         Row
         {
-            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 20
             MySpacer{}
 
