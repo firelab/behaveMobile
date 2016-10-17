@@ -419,6 +419,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -486,6 +487,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -552,6 +554,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -617,6 +620,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -682,6 +686,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -750,6 +755,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -861,6 +867,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -882,7 +889,6 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 style: touchStyle
                 width: fittedTextInputWidth
-
                 readOnly: true
             }
         }
@@ -900,6 +906,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -921,7 +928,6 @@ Flickable
                 text:  flameLengthModel.text
                 style: touchStyle
                 width: fittedTextInputWidth
-
                 readOnly: true
             }
         }
