@@ -14,16 +14,17 @@ Flickable
     width: parent.width
     height: parent.height
     contentWidth: myContentColumn.width
-    contentHeight: myContentColumn.height + 10
+    contentHeight: myContentColumn.height + 5
 
     bottomMargin: Qt.inputMethod.visible ? Qt.inputMethod.keyboardRectangle.height : 0
-
-    //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
-    property int maxInputLabelWidth: longestInputLabel.width
-    property int maxUnitLabelWidth: longestUnitLabel.width
+    property int maxInputLabelWidth: longestInputLabel.paintedWidth
+    property int maxUnitLabelWidth: longestUnitLabel.paintedWidth
+    property int fittedInputLabelWidth: Math.min((Screen.width * 0.4), maxInputLabelWidth)
 
+    // fittedTextInputWidth below is in case the first argument in max function call below is negative for some reason
+    property int fittedTextInputWidth: Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
 
     signal userInputChanged(string myInput, int myInputSignal)
 
@@ -32,8 +33,15 @@ Flickable
         id: longestInputLabel
         visible: false
         font.pointSize: myStyleModel.font.pointSize
-        text: "Flame Length  "
+        text: "Flame Length "
+    }
 
+    Text
+    {
+        id: longestUnitLabel
+        visible: false
+        font.pointSize: myStyleModel.font.pointSize
+        text: "ch/h "
     }
 
     function isInputInBounds(myModel)
@@ -209,8 +217,7 @@ Flickable
     Column
     {
         id: myContentColumn
-        spacing: 30
-        MySpacer{}
+        spacing: 20
 
         Row
         {
@@ -220,17 +227,19 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: fuelModelLabel
                 anchors.verticalCenter: parent.verticalCenter
+
                 text: fuelModelNumberModel.myName
                 font.pointSize: myStyleModel.font.pointSize
+                wrapMode: Text.WordWrap
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -238,19 +247,21 @@ Flickable
                 id: fuelModelUnitLabel
                 anchors.verticalCenter: parent.verticalCenter
                 text: ""
+                horizontalAlignment: Text.AlignHCenter
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
             {
                 id: fuelModelNumberText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
+
                 text: fuelModelNumberModel.text
                 style: touchStyle
 
+                width: fittedTextInputWidth
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: IntValidator{bottom: 1; top: 999999;}
 
@@ -297,36 +308,42 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: oneHourMoistureLabel
                 anchors.verticalCenter: parent.verticalCenter
+
                 text: oneHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                //width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
             {
                 id: oneHourMoistureUnitsLabel
                 anchors.verticalCenter: parent.verticalCenter
-                text: oneHourMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                text: oneHourMoistureModel.myUnits
+                horizontalAlignment: Text.AlignHCenter
+                width: maxUnitLabelWidth
             }
 
             TextField
             {
                 id: oneHourMoistureText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
+
 
                 style: touchStyle
+
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -386,23 +403,22 @@ Flickable
 //                    setCurrentIndexAt(0, 200, 0)
 //                }
 //            }
-
-
         }
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: tenHourMoistureLabel
+
                 anchors.verticalCenter: parent.verticalCenter
                 text: tenHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -411,17 +427,19 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: tenHourMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             TextField
             {
                 id: tenHourMoistureText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
+
                 text: tenHourMoistureModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -457,7 +475,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -467,7 +485,7 @@ Flickable
                 text: hundredHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -475,6 +493,7 @@ Flickable
                 id: hundredHourMoistureUnitsLabel
                 anchors.verticalCenter: parent.verticalCenter
                 text: hundredHourMoistureModel.myUnits
+                horizontalAlignment: Text.AlignHCenter
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
                 width: maxUnitLabelWidth
@@ -483,10 +502,10 @@ Flickable
             TextField
             {
                 id: hundredHourMoistureText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
+                anchors.verticalCenter: parent.verticalCenter  
                 text: hundredHourMoistureModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -522,17 +541,17 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
-                id: liveHerbaceousMoistureLabel
+                id: liveHerbaceousMoistureLabel          
                 anchors.verticalCenter: parent.verticalCenter
                 text: liveHerbaceousMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -541,6 +560,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: liveHerbaceousMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -548,10 +568,10 @@ Flickable
             TextField
             {
                 id: liveHerbaceousMoistureText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
+                anchors.verticalCenter: parent.verticalCenter            
                 text: liveHerbaceousMoistureModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -586,17 +606,17 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: liveWoodyMoistureLabel
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter          
                 text: liveWoodyMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -605,6 +625,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: liveWoodyMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -612,10 +633,10 @@ Flickable
             TextField
             {
                 id: liveWoodyMoistureText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
+                anchors.verticalCenter: parent.verticalCenter         
                 text: liveWoodyMoistureModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -650,17 +671,17 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: windSpeedLabel
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter        
                 text: windSpeedModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -669,6 +690,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: windSpeedModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -677,9 +699,9 @@ Flickable
             {
                 id: windSpeedText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
                 text: windSpeedModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -717,17 +739,17 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: slopeLabel
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter        
                 text: slopeModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -736,6 +758,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: slopeModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -744,9 +767,9 @@ Flickable
             {
                 id: slopeText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 20
                 text: slopeModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: DoubleValidator{bottom: 1; top: 999999;}
@@ -791,7 +814,6 @@ Flickable
                 id: calculateButton
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Calculate"
-
                 style: myButtonStyle
                 property bool isAllInputInBounds: false
 
@@ -828,17 +850,17 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: spreadRateLabel
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter           
                 text: spreadRateModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -847,26 +869,19 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: spreadRateModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-            }
-
-            Label
-            {
-                visible: false
-                id: longestUnitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: longestUnitLableModel.myUnits
-                font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
+                width: maxUnitLabelWidth
                 color: "white"
             }
 
             TextField
             {
                 id: spreadRateText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 25
+                anchors.verticalCenter: parent.verticalCenter      
                 text: spreadRateModel.text
+                font.pointSize: myStyleModel.font.pointSize
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 readOnly: true
             }
@@ -874,17 +889,17 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
             {
                 id: flameLengthLabel
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter        
                 text: flameLengthModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
             Label
@@ -893,6 +908,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: flameLengthModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -900,11 +916,11 @@ Flickable
             TextField
             {
                 id: flameLengthText
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter        
                 font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
                 text:  flameLengthModel.text
                 style: touchStyle
+                width: fittedTextInputWidth
 
                 readOnly: true
             }
@@ -914,8 +930,7 @@ Flickable
     TextInputModel
     {
         id: myStyleModel
-        font.pointSize: 25
-        width: textInputContainer.width - liveHerbaceousMoistureLabel.width - spreadRateUnitLabel.width - 120
+        font.pointSize: 24
     }
 
     Component

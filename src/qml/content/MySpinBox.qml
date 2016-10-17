@@ -101,22 +101,18 @@ Rectangle {
                 if(control.value < upper)
                 {
                     control.increase()
-                    console.debug("increasing!")
                 }
                 else
                 {
-                    console.debug("limit reached!")
                     upTimer.running = false
                 }
             }
             onPressAndHold:
             {
-                console.debug("Up pressed and held!")
                 upTimer.running = true
             }
             onReleased:
             {
-                console.debug("Up released!")
                 upTimer.running = false
             }
             Timer
@@ -128,11 +124,9 @@ Rectangle {
                     if(control.value < upper)
                     {
                         control.increase()
-                        console.debug("increasing!")
                     }
                     else
                     {
-                        console.debug("limit reached!")
                         upTimer.running = false
                     }
                 }
@@ -177,18 +171,15 @@ Rectangle {
                 }
                 else
                 {
-                    console.debug("limit reached!")
                     upTimer.running = false
                 }
             }
             onPressAndHold:
             {
-                console.debug("Down pressed and held!")
                 downTimer.running = true
             }
             onReleased:
             {
-                console.debug("Down released!")
                 downTimer.running = false
             }
             Timer
@@ -200,11 +191,9 @@ Rectangle {
                     if(control.value > lower)
                     {
                         control.decrease()
-                        console.debug("decreasing!")
                     }
                     else
                     {
-                        console.debug("limit reached!")
                         downTimer.running = false
                     }
                 }

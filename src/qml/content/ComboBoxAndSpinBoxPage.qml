@@ -237,7 +237,7 @@ Flickable
         Row
         {
             anchors.horizontalCenter: parent.horizontalCenter
-            MySpacer{}
+            MySpacer{ width: 5}
         }
 
         Row
@@ -246,6 +246,7 @@ Flickable
             MySpacer
             {
                 id: fuelModelSpacer
+                width: 5
             }
 
             Label
@@ -272,7 +273,7 @@ Flickable
             MyComboBox
             {
                 id: fuelModelComboBox
-                width: oneHourMoistureRow.width - fuelModelLabel.width - fuelModelUnitLabel.width - (4 * fuelModelSpacer.width)
+                width: oneHourMoistureRow.width - fuelModelLabel.width - fuelModelUnitLabel.width - (13 * fuelModelSpacer.width)
                 onActivated:
                 {
                     var fuelModelNumber = mapToFuelModelNumber(currentIndex)
@@ -303,7 +304,8 @@ Flickable
         {
             id: oneHourMoistureRow
             spacing: 20
-            MySpacer{}
+
+            MySpacer{ width: 5}
 
             Label
             {
@@ -346,7 +348,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -388,7 +390,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -428,7 +430,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -468,7 +470,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -508,7 +510,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -548,7 +550,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -635,7 +637,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {
@@ -683,7 +685,7 @@ Flickable
         Row
         {
             spacing: 20
-            MySpacer{}
+            MySpacer{ width: 5}
 
             Label
             {

@@ -461,15 +461,6 @@ ApplicationWindow
         text: ""
     }
 
-    TextInputModel
-    {
-        id: longestUnitLableModel
-        property string myUnits: "ch/h"
-
-        readOnly: true
-        text: ""
-    }
-
     // Load the pages
     ListModel
     {

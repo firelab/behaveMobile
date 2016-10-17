@@ -1,10 +1,11 @@
 import QtQuick 2.2
+import QtQuick.Window 2.2
 
 Item
 {
     id: root
     width: parent.width
-    height: 100
+    height: Screen.height / 10
 
     property alias text: textitem.text
     signal clicked
@@ -32,7 +33,7 @@ Item
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: 15
-        height: 1
+        height: 2
         color: "#424246"
     }
 

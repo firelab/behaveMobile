@@ -3,7 +3,7 @@ import QtQuick.Controls 1.2
 
 TextEdit
 {
-    width: 20
+    width: 5
     height: 5
     color: "transparent"
     visible: true
