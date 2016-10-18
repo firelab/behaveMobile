@@ -44,7 +44,7 @@ Rectangle {
         // Invisible object used to set size of the spin box
 
         visible: false
-        font.pointSize: 42
+        font.pointSize: 36
         text: "AAAAAA"
     }
 
@@ -55,7 +55,7 @@ Rectangle {
         text: control.value
         //anchors.fill: parent
         fontSizeMode: Text.Fit
-        font.pointSize: 35
+        font.pointSize: 24
     //            color: "#21be2b"
     //            selectionColor: "#21be2b"
     //            selectedTextColor: "#ffffff"

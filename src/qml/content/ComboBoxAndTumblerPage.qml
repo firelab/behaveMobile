@@ -20,8 +20,17 @@ Flickable
     //boundsBehavior: Flickable.OvershootBounds
     boundsBehavior: Flickable.StopAtBounds
 
+    signal userInputChanged(string myInput, int myInputSignal)
+
     property int maxInputLabelWidth: longestInputLabel.width
     property int maxUnitLabelWidth: longestUnitLabel.width
+    property int fittedInputLabelWidth: Math.min((Screen.width * 0.4), maxInputLabelWidth)
+
+    property int fittedTextBoxWidth: Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
+    property int fittedTumblerWidth: Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
+
+    property var comboBoxToFuelModelMapping: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                              101, 102, 103, 104, 105, 106, 107, 108, 109]
 
     Text
     {
@@ -32,10 +41,13 @@ Flickable
 
     }
 
-    signal userInputChanged(string myInput, int myInputSignal)
-
-    property var comboBoxToFuelModelMapping: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                              101, 102, 103, 104, 105, 106, 107, 108, 109]
+    Text
+    {
+        id: longestUnitLabel
+        visible: false
+        font.pointSize: myStyleModel.font.pointSize
+        text: "ch/h "
+    }
 
     function mapToFuelModelNumber(currentIndex)
     {
@@ -222,8 +234,7 @@ Flickable
 
         Row
         {
-            spacing: 20
-
+            spacing: 10
             MySpacer{}
 
             Label
@@ -232,24 +243,17 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: fuelModelNumberModel.myName
                 font.pointSize: myStyleModel.font.pointSize
+                wrapMode: Text.WordWrap
 
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
             }
 
-            Label
-            {
-                id: fuelModelUnitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: ""
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: spreadRateUnitLabel.width
-            }
 
             MyComboBox
             {
                 id: fuelModelComboBox
+                width: oneHourMoistureRow.width - (fuelModelLabel.width + 25)
                 onActivated:
                 {
                     var fuelModelNumber = mapToFuelModelNumber(currentIndex)
@@ -261,6 +265,7 @@ Flickable
                 Component.onCompleted:
                 {
                     setModel(fuelModelNumberModel)
+
                     if(fuelModelNumberModel.text === "")
                     {
                         currentIndex = 0
@@ -279,8 +284,7 @@ Flickable
         Row
         {
             id: oneHourMoistureRow
-            spacing: 20
-
+            spacing: 10
             MySpacer{}
 
             Label
@@ -290,7 +294,8 @@ Flickable
                 text: oneHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -300,7 +305,7 @@ Flickable
                 text: oneHourMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             Rectangle
@@ -313,6 +318,7 @@ Flickable
                     id: oneHourMoistureTumblerView
                     currentIndex: oneHourMoistureTumblerModel.currentIndex
                     model: oneHourMoistureTumblerModel.model
+                    width: fittedTumblerWidth
 
                     onCurrentIndexChanged:
                     {
@@ -324,7 +330,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -334,7 +340,8 @@ Flickable
                 text: tenHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -344,7 +351,7 @@ Flickable
                 text: tenHourMoistureModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: spreadRateUnitLabel.width
+                width: maxUnitLabelWidth
             }
 
             Rectangle
@@ -369,7 +376,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -379,7 +386,8 @@ Flickable
                 text: hundredHourMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -413,7 +421,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -423,7 +431,8 @@ Flickable
                 text: liveHerbaceousMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -457,7 +466,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -467,7 +476,8 @@ Flickable
                 text: liveWoodyMoistureModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -501,7 +511,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -511,7 +521,8 @@ Flickable
                 text: windSpeedModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -546,7 +557,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -556,7 +567,8 @@ Flickable
                 text: slopeModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -603,8 +615,6 @@ Flickable
 
                 property bool isAllInputInBounds: false
 
-                //height: calculateButton.text.height
-                //width: calculateButton.text.width
                 height: text.paintedWidth
                 width: text.paintedWidth
 
@@ -632,7 +642,7 @@ Flickable
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -642,7 +652,8 @@ Flickable
                 text: spreadRateModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -651,16 +662,8 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: spreadRateModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-            }
-
-            Label
-            {
-                visible: false
-                id: longestUnitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: longestUnitLableModel.myUnits
-                font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
+                width: maxUnitLabelWidth
                 color: "white"
             }
 
@@ -668,19 +671,17 @@ Flickable
             {
                 id: spreadRateText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 25
                 text: spreadRateModel.text
-                //style: touchStyle
                 font.pointSize: myStyleModel.font.pointSize
+                width: fittedTextBoxWidth
                 color: "white"
-
                 readOnly: true
             }
         }
 
         Row
         {
-            spacing: 20
+            spacing: 10
             MySpacer{}
 
             Label
@@ -690,7 +691,8 @@ Flickable
                 text: flameLengthModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -699,6 +701,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: flameLengthModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -708,11 +711,9 @@ Flickable
                 id: flameLengthText
                 anchors.verticalCenter: parent.verticalCenter
                 font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
                 text:  flameLengthModel.text
-                //style: touchStyle
+                width: fittedTextBoxWidth
                 color: "white"
-
                 readOnly: true
             }
         }
@@ -722,6 +723,5 @@ Flickable
     {
         id: myStyleModel
         font.pointSize: 25
-        width: textInputContainer.width - liveHerbaceousMoistureLabel.width - spreadRateUnitLabel.width - 120
     }
 }

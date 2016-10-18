@@ -41,11 +41,13 @@ Tumbler
     anchors.verticalCenter: parent.verticalCenter
 
     model: myModel
-    visibleItemCount: 3
+    visibleItemCount: 2
 
-    font.pointSize: 30
-    height: sizeSettingText.paintedHeight * 0.80
-    width: sizeSettingText.paintedWidth
+    font.pointSize: 42
+    //height: sizeSettingText.paintedHeight * 0.6
+    height: Screen.height / 6
+    //width: sizeSettingText.paintedWidth
+    width: Screen.width / 4
 
     contentItem: ListView
     {
@@ -64,7 +66,7 @@ Tumbler
         // Invisible object used to set size of the tumbler
         id: sizeSettingText
         visible: false
-        font.pointSize: 100
+        font.pointSize: 80
         text: "A"
     }
 
@@ -96,27 +98,29 @@ Tumbler
         font: myTumbler.font
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        opacity: 0.4 + (Math.max(0, 1 - Math.abs(Tumbler.displacement)) * 0.6)
+        //opacity: 0.4 + (Math.max(0, 1 - Math.abs(Tumbler.displacement)) * 0.6)
         //scale: 1.0 + Math.max(0, 1 - Math.abs(Tumbler.displacement)) * 0.6
     }
 
     Rectangle
     {
         anchors.horizontalCenter: myTumbler.horizontalCenter
-//            y: myTumbler.height * 0.4 // Value for 5 visible items
-        y: myTumbler.height * 0.33 // Value for 3 visible items
-        width: sizeSettingText.paintedWidth * 0.66
-        height: 2
+//        y: myTumbler.height * 0.4 // Value for 5 visible items
+//        y: myTumbler.height * 0.33 // Value for 3 visible items
+        y: myTumbler.height * 0.25 // Value for 3 visible items
+        width: myTumbler.width * 0.66
+        height: 3
         color: "black"
     }
 
     Rectangle
     {
         anchors.horizontalCenter: myTumbler.horizontalCenter
-//          y: myTumbler.height * 0.6 // Value for 5 visible items
-        y: myTumbler.height * 0.67 // Value for 3 visible items
-        width: sizeSettingText.paintedWidth * 0.66
-        height: 2
+//        y: myTumbler.height * 0.6 // Value for 5 visible items
+//        y: myTumbler.height * 0.67 // Value for 3 visible items
+        y: myTumbler.height * 0.75 // Value for 2 visible items
+        width: myTumbler.width * 0.66
+        height: 3
         color: "black"
     }
 }

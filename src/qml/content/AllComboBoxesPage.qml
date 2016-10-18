@@ -32,6 +32,14 @@ Flickable
 
     }
 
+    Text
+    {
+        id: longestUnitLabel
+        visible: false
+        font.pointSize: myStyleModel.font.pointSize
+        text: "ch/h "
+    }
+
     signal userInputChanged(string myInput, int myInputSignal)
 
     property var comboBoxToFuelModelMapping: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
@@ -771,16 +779,6 @@ Flickable
                 id: spreadRateUnitLabel
                 anchors.verticalCenter: parent.verticalCenter
                 text: spreadRateModel.myUnits
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-            }
-
-            Label
-            {
-                visible: false
-                id: longestUnitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: longestUnitLableModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
             }

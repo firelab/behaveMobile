@@ -23,6 +23,9 @@ Flickable
     property int maxInputLabelWidth: longestInputLabel.width
     property int maxUnitLabelWidth: longestUnitLabel.width
 
+    property int fittedInputLabelWidth: Math.min((Screen.width * 0.4), maxInputLabelWidth)
+    property int fittedTextBoxWidth: Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
+
     Text
     {
         id: longestInputLabel
@@ -30,6 +33,14 @@ Flickable
         font.pointSize: myStyleModel.font.pointSize
         text: "Flame Length"
 
+    }
+
+    Text
+    {
+        id: longestUnitLabel
+        visible: false
+        font.pointSize: myStyleModel.font.pointSize
+        text: "ch/h "
     }
 
     signal userInputChanged(string myInput, int myInputSignal)
@@ -260,20 +271,10 @@ Flickable
                 width: maxInputLabelWidth
             }
 
-            Label
-            {
-                id: fuelModelUnitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: ""
-                font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-                width: spreadRateUnitLabel.width
-            }
-
             MyComboBox
             {
                 id: fuelModelComboBox
-                width: oneHourMoistureRow.width - fuelModelLabel.width - fuelModelUnitLabel.width - (13 * fuelModelSpacer.width)
+                width: oneHourMoistureRow.width - (fuelModelLabel.width + 25)
                 onActivated:
                 {
                     var fuelModelNumber = mapToFuelModelNumber(currentIndex)
@@ -285,6 +286,8 @@ Flickable
                 Component.onCompleted:
                 {
                     setModel(fuelModelNumberModel)
+
+
                     if(fuelModelNumberModel.text === "")
                     {
                         currentIndex = 0
@@ -636,8 +639,8 @@ Flickable
 
         Row
         {
-            spacing: 20
-            MySpacer{ width: 5}
+            spacing: 10
+            MySpacer{}
 
             Label
             {
@@ -646,7 +649,8 @@ Flickable
                 text: spreadRateModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -655,16 +659,8 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: spreadRateModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
-                color: "white"
-            }
-
-            Label
-            {
-                visible: false
-                id: longestUnitLabel
-                anchors.verticalCenter: parent.verticalCenter
-                text: longestUnitLableModel.myUnits
-                font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
+                width: maxUnitLabelWidth
                 color: "white"
             }
 
@@ -672,20 +668,18 @@ Flickable
             {
                 id: spreadRateText
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 25
                 text: spreadRateModel.text
-                //style: touchStyle
                 font.pointSize: myStyleModel.font.pointSize
+                width: fittedTextBoxWidth
                 color: "white"
-
                 readOnly: true
             }
         }
 
         Row
         {
-            spacing: 20
-            MySpacer{ width: 5}
+            spacing: 10
+            MySpacer{}
 
             Label
             {
@@ -694,7 +688,8 @@ Flickable
                 text: flameLengthModel.myName
                 font.pointSize: myStyleModel.font.pointSize
                 color: "white"
-                width: maxInputLabelWidth
+                width: fittedInputLabelWidth
+                wrapMode: Text.WordWrap
             }
 
             Label
@@ -703,6 +698,7 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: flameLengthModel.myUnits
                 font.pointSize: myStyleModel.font.pointSize
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 width: maxUnitLabelWidth
             }
@@ -712,11 +708,9 @@ Flickable
                 id: flameLengthText
                 anchors.verticalCenter: parent.verticalCenter
                 font.pointSize: myStyleModel.font.pointSize
-                anchors.margins: 25
                 text:  flameLengthModel.text
-                //style: touchStyle
+                width: fittedTextBoxWidth
                 color: "white"
-
                 readOnly: true
             }
         }
