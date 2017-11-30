@@ -43,7 +43,7 @@ void CrownInputs::initializeMembers()
     canopyBulkDensity_ = 0;
     canopyUserProvidedFlameLength_ = 0;
     canopyUserProvidedFirelineIntensity_ = 0;
-    foliarMoisture_ = 0;
+    moistureFoliar_ = 0;
 }
 
 double CrownInputs::getCanopyBaseHeight() const
@@ -66,19 +66,19 @@ double CrownInputs::getCanopyFirelineIntensity() const
     return canopyUserProvidedFirelineIntensity_;
 }
 
-double CrownInputs::getFoliarMoisture() const
+double CrownInputs::getMoistureFoliar(MoistureUnits::MoistureUnitsEnum moistureUnits) const
 {
-    return foliarMoisture_;
+    return MoistureUnits::fromBaseUnits(moistureFoliar_, moistureUnits);
 }
 
-void CrownInputs::setCanopyBaseHeight(double canopyBaseHeight)
+void CrownInputs::setCanopyBaseHeight(double canopyBaseHeight, LengthUnits::LengthUnitsEnum heightUnits)
 {
-    canopyBaseHeight_ = canopyBaseHeight;
+    canopyBaseHeight_ = LengthUnits::toBaseUnits(canopyBaseHeight, heightUnits);
 }
 
-void CrownInputs::setCanopyBulkDensity(double canopyBulkDensity)
+void CrownInputs::setCanopyBulkDensity(double canopyBulkDensity, DensityUnits::DensityUnitsEnum densityUnits)
 {
-    canopyBulkDensity_ = canopyBulkDensity;
+    canopyBulkDensity_ = DensityUnits::toBaseUnits(canopyBulkDensity, densityUnits);
 }
 
 void CrownInputs::setCanopyFlameLength(double canopyUserProvidedFlameLength)
@@ -91,14 +91,16 @@ void CrownInputs::setCanopyFirelineIntensity(double canopyUserProvidedFirelineIn
     canopyUserProvidedFirelineIntensity_ = canopyUserProvidedFirelineIntensity;
 }
 
-void CrownInputs::setFoliarMoisture(double foliarMoisture)
+void CrownInputs::setMoistureFoliar(double moistureFoliar, MoistureUnits::MoistureUnitsEnum moistureUnits)
 {
-    foliarMoisture_ = foliarMoisture;
+    moistureFoliar_ = MoistureUnits::toBaseUnits(moistureFoliar, moistureUnits);
 }
 
-void CrownInputs::updateCrownInputs(double canopyBaseHeight, double canopyBulkDensity, double foliarMoisture)
+void CrownInputs::updateCrownInputs(double canopyBaseHeight, LengthUnits::LengthUnitsEnum canopyBaseHeightUnits, 
+    double canopyBulkDensity, DensityUnits::DensityUnitsEnum densityUnits,
+    double moistureFoliar, MoistureUnits::MoistureUnitsEnum moistureUnits)
 {
-    canopyBaseHeight_ = canopyBaseHeight;
-    canopyBulkDensity_ = canopyBulkDensity;
-    foliarMoisture_ = foliarMoisture;
+    setCanopyBaseHeight(canopyBaseHeight, canopyBaseHeightUnits);
+    setCanopyBulkDensity(canopyBulkDensity, densityUnits);
+    setMoistureFoliar(moistureFoliar, moistureUnits);
 }

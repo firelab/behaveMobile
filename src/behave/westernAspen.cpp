@@ -37,20 +37,6 @@ WesternAspen::WesternAspen()
 
 }
 
-WesternAspen::WesternAspen(const WesternAspen &rhs)
-{
-    mortality_ = rhs.mortality_;
-}
-
-WesternAspen& WesternAspen::operator = (const WesternAspen& rhs)
-{
-    if (this != &rhs)
-    {
-        mortality_ = rhs.mortality_;
-    }
-    return *this;
-}
-
 WesternAspen::~WesternAspen()
 {
 
@@ -58,7 +44,13 @@ WesternAspen::~WesternAspen()
 
 void WesternAspen::initializeMembers()
 {
+    DBH_ = 0.0;
     mortality_ = 0.0;
+}
+
+double WesternAspen::getAspenDBH() const
+{
+    return DBH_;
 }
 
 double WesternAspen::getAspenMortality () const
@@ -66,15 +58,7 @@ double WesternAspen::getAspenMortality () const
     return mortality_;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Returns the interpolated/extrapolated value based upon curing.
-*
-*  \param curing        Curing level (fraction)
-*  \param valueArray    Array of 6 boundary values.
-*
-*  \return value        Interpolated value
-*/
-double WesternAspen::aspenInterpolate(double curing, double *valueArray)
+double WesternAspen::aspenInterpolate(double curing, double* valueArray)
 {
     static double curingArray[] = { 0.0, 0.3, 0.5, 0.7, 0.9, 1.000000001 };
     curing = (curing < 0.0) ? 0.0 : curing;
@@ -93,19 +77,6 @@ double WesternAspen::aspenInterpolate(double curing, double *valueArray)
     return value;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen fuel bed depth.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \return Aspen fuel bed depth (ft).
-*/
-
 double WesternAspen::getAspenFuelBedDepth(int aspenFuelModelNumber)
 {
     int aspenFuelModelIndex = aspenFuelModelNumber - 1;
@@ -113,53 +84,20 @@ double WesternAspen::getAspenFuelBedDepth(int aspenFuelModelNumber)
     return Depth[aspenFuelModelIndex];
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen dead fuel moisture of extinction
-*
-*  \return dead fuel moisture of extinction.
-*/
-
 double WesternAspen::getAspenMoistureOfExtinctionDead()
 {
     return 0.25;
 }
-
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen dead fuel heat of combustion
-*
-*  \return dead fuel heat of combustion.
-*/
 
 double WesternAspen::getAspenHeatOfCombustionDead()
 {
     return 8000.0;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen live fuel heat of combustion
-*
-*  \return live fuel heat of combustion.
-*/
-
 double WesternAspen::getAspenHeatOfCombustionLive()
 {
     return 8000.0;
 }
-
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen dead 0.0 - 0.25" load.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \param aspenCuringLevel      Curing level (fraction)
-*
-*  \return load                 Aspen dead 0.0 - 0.25" load (lb/ft2).
-*/
 
 double WesternAspen::getAspenLoadDeadOneHour(int aspenFuelModelNumber, double aspenCuringLevel)
 {
@@ -180,19 +118,6 @@ double WesternAspen::getAspenLoadDeadOneHour(int aspenFuelModelNumber, double as
     return load * 2000.0 / 43560.0;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen dead 0.25 - 1.0" load.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \return load                 Aspen dead 0.25 - 1.0" load (lb/ft2).
-*/
-
 double WesternAspen::getAspenLoadDeadTenHour(int aspenFuelModelNumber)
 {
     int aspenFuelModelIndex = aspenFuelModelNumber - 1;
@@ -204,21 +129,6 @@ double WesternAspen::getAspenLoadDeadTenHour(int aspenFuelModelNumber)
     }
     return load * 2000.0 / 43560.0;
 }
-
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen live herbaceous load.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \param aspenCuringLevel      Curing level (fraction)
-*
-*  \return load                 Aspen live herbaceous load (lb/ft2).
-*/
 
 double WesternAspen::getAspenLoadLiveHerbaceous(int aspenFuelModelNumber, double aspenCuringLevel)
 {
@@ -239,31 +149,16 @@ double WesternAspen::getAspenLoadLiveHerbaceous(int aspenFuelModelNumber, double
     return load * 2000.0 / 43560.0;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen live woody load.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \param aspenCuringLevel      Curing level (fraction)
-*
-*  \return load                 Aspen live woody load (lb/ft2).
-*/
-
 double WesternAspen::getAspenLoadLiveWoody(int aspenFuelModelNumber, double aspenCuringLevel)
 {
     int aspenFuelModelIndex = aspenFuelModelNumber - 1;
     static double Load[5][6] = 
     {
-        { 0.403, 0.403, 0.333, 0.283, 0.277, 0.274 },
-        { 0.000, 0.000, 0.000, 0.000, 0.000, 0.000 },
-        { 0.000, 0.000, 0.000, 0.000, 0.000, 0.000 },
+        { 0.403, 0.403, 0.333, 0.283, 0.277, 0.2740 },
+        { 0.000, 0.000, 0.000, 0.000, 0.000, 0.0000 },
+        { 0.000, 0.000, 0.000, 0.000, 0.000, 0.0000 },
         { 0.455, 0.455, 0.364, 0.290, 0.261, 0.2465 },
-        { 0.000, 0.000, 0.000, 0.000, 0.000, 0.000 }
+        { 0.000, 0.000, 0.000, 0.000, 0.000, 0.0000 }
     };
     double load = 0.0;
     if (aspenFuelModelIndex >= 0 && aspenFuelModelIndex < 5)
@@ -272,16 +167,6 @@ double WesternAspen::getAspenLoadLiveWoody(int aspenFuelModelNumber, double aspe
     }
     return load * 2000. / 43560.0;
 }
-
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen mortality rate.
-*
-*  \param severity Fire severity level: 0 = low severity, 1= moderate+ severity
-*  \param flameLength Flame length of the fire at the tree (ft).
-*  \param dbh          Aspen diameter at breast height (in).
-*
-*  \return Aspen mortality rate (fraction).
-*/
 
 double WesternAspen::calculateAspenMortality(int severity, double flameLength, double DBH)
 {
@@ -299,21 +184,6 @@ double WesternAspen::calculateAspenMortality(int severity, double flameLength, d
     mortality_ = (mortality > 1.0) ? 1.0 : mortality;
     return mortality_;
 }
-
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen dead 0.0 - 0.25" savr.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \param aspenCuringLevel      Curing level (fraction)
-*
-*  \return Aspen dead 0.0 - 0.25" savr (ft2/ft3).
-*/
 
 double WesternAspen::getAspenSavrDeadOneHour(int aspenFuelModelNumber, double aspenCuringLevel)
 {
@@ -334,42 +204,16 @@ double WesternAspen::getAspenSavrDeadOneHour(int aspenFuelModelNumber, double as
     return savr;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen dead 0.25 - 1.0" savr.
-*
-*  \return Aspen dead 0.25 - 1.0" savr (ft2/ft3).
-*/
-
 double WesternAspen::getAspenSavrDeadTenHour()
 {
     return 109.0;
 }
-
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen live herbaceous savr.
-*
-*  \return Aspen live herbaceous savr (ft2/ft3).
-*/
 
 double WesternAspen::getAspenSavrLiveHerbaceous()
 {
     return 2800.0;
 }
 
-//------------------------------------------------------------------------------
-/*! \brief Calculates the aspen live woody savr.
-*
-*  \param aspenFuelModelNumber  ID number of the aspen fuel type:
-*                               1 = Aspen/shrub
-*                               2 = Aspen/tall forb
-*                               3 = Aspen/low forb
-*                               4 = Mixed/forb
-*                               5 = Mixed/shrub
-*
-*  \param aspenCuringLevel      Curing level (fraction)
-*
-*  \return Aspen live woody savr (ft2/ft3).
-*/
 double WesternAspen::getAspenSavrLiveWoody(int aspenFuelModelNumber, double aspenCuringLevel)
 {
     int aspenFuelModelIndex = aspenFuelModelNumber - 1;

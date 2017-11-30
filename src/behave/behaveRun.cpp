@@ -30,283 +30,57 @@
 
 #include "fuelModelSet.h"
 
-BehaveRun::BehaveRun(FuelModelSet &fuelModelSet)
-    : surface_(fuelModelSet),
-    crown_(fuelModelSet, surface_)
+BehaveRun::BehaveRun(FuelModelSet& fuelModelSet)
+    : surface(fuelModelSet),
+    crown(fuelModelSet)
 {
     fuelModelSet_ = &fuelModelSet;
 }
 
-BehaveRun::BehaveRun(const BehaveRun &rhs)
-    : surface_(*rhs.fuelModelSet_),
-    crown_(*rhs.fuelModelSet_, surface_) 
+BehaveRun::BehaveRun(const BehaveRun& rhs)
+    : surface(*rhs.fuelModelSet_),
+    crown(*rhs.fuelModelSet_)
 {
-    fuelModelSet_ = rhs.fuelModelSet_;
-    surface_ = rhs.surface_;
-    crown_ = rhs.crown_;
-    spot_ = rhs.spot_;
+    memberwiseCopyAssignment(rhs);
 }
 
-BehaveRun& BehaveRun::operator= (const BehaveRun& rhs)
+BehaveRun& BehaveRun::operator=(const BehaveRun& rhs)
 {
     if (this != &rhs)
     {
-        fuelModelSet_ = rhs.fuelModelSet_;
-        surface_ = rhs.surface_;
-        crown_ = rhs.crown_;
-        spot_ = rhs.spot_;
+        memberwiseCopyAssignment(rhs);
     }
     return *this;
 }
 
+void BehaveRun::memberwiseCopyAssignment(const BehaveRun& rhs)
+{
+    setFuelModelSet(*rhs.fuelModelSet_);
+    surface = rhs.surface;
+    crown = rhs.crown;
+    spot = rhs.spot;
+}
+
 BehaveRun::~BehaveRun()
 {
-    // Default Destructor
-}
 
-void BehaveRun::setCanopyCover(double canopyCover)
-{
-    surface_.setCanopyCover(canopyCover);
-}
-
-void BehaveRun::setCanopyHeight(double canopyHeight)
-{
-    surface_.setCanopyHeight(canopyHeight);
-}
-
-void BehaveRun::setCrownRatio(double crownRatio)
-{
-    surface_.setCrownRatio(crownRatio);
 }
 
 void BehaveRun::setFuelModelSet(FuelModelSet& fuelModelSet)
 {
     // makes this behaveRun's fuelModelSet_ point to the FuelModelSet given to this method as a parameter
     fuelModelSet_ = &fuelModelSet;
+    surface.setFuelModelSet(fuelModelSet);
+    crown.setFuelModelSet(fuelModelSet);
 }
 
-void BehaveRun::setFuelModelNumber(int fuelModelNumber)
+void BehaveRun::reinitialize()
 {
-    surface_.setFuelModelNumber(fuelModelNumber);
-}
-
-void BehaveRun::setMoistureOneHour(double moistureOneHour)
-{
-    surface_.setMoistureOneHour(moistureOneHour);
-}
-
-void BehaveRun::setMoistureTenHour(double moistureTenHour)
-{
-    surface_.setMoistureTenHour(moistureTenHour);
-}
-
-void BehaveRun::setMoistureHundredHour(double moistureHundredHour)
-{
-    surface_.setMoistureHundredHour(moistureHundredHour);
-}
-
-void BehaveRun::setMoistureLiveHerbaceous(double moistureLiveHerbaceous)
-{
-    surface_.setMoistureLiveHerbaceous(moistureLiveHerbaceous);
-}
-
-void BehaveRun::setMoistureLiveWoody(double moistureLiveWoody)
-{
-    surface_.setMoistureLiveWoody(moistureLiveWoody);
-}
-
-void BehaveRun::setSlope(double slope)
-{
-    surface_.setSlope(slope);
-}
-
-void BehaveRun::setAspect(double aspect)
-{
-    surface_.setAspect(aspect);
-}
-
-void BehaveRun::setWindSpeed(double windSpeed)
-{
-    surface_.setWindSpeed(windSpeed);
-}
-
-void BehaveRun::setWindDirection(double windDirection)
-{
-    surface_.setWindDirection(windDirection);
-}
-
-void BehaveRun::setWindHeightInputMode(WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode)
-{
-    surface_.setWindHeightInputMode(windHeightInputMode);
-}
-
-void BehaveRun::setWindAndSpreadOrientationMode(WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum windAndSpreadOrientationMode)
-{
-    surface_.setWindAndSpreadOrientationMode(windAndSpreadOrientationMode);
-}
-
-void BehaveRun::setFirstFuelModelNumber(int firstFuelModelNumber)
-{
-    surface_.setFirstFuelModelNumber(firstFuelModelNumber);
-}
-
-void BehaveRun::setSecondFuelModelNumber(int secondFuelModelNumber)
-{
-    surface_.setSecondFuelModelNumber(secondFuelModelNumber);
-}
-
-void BehaveRun::setTwoFuelModelsFirstFuelModelCoverage(double firstFuelModelCoverage)
-{
-    surface_.setTwoFuelModelsFirstFuelModelCoverage(firstFuelModelCoverage);
-}
-
-void BehaveRun::setTwoFuelModelsMethod(TwoFuelModels::TwoFuelModelsEnum twoFuelModelsMethod)
-{
-    surface_.setTwoFuelModelsMethod(twoFuelModelsMethod);
-}
-
-void BehaveRun::updateSurfaceInputs(int fuelModelNumber, double moistureOneHour, double moistureTenHour, double moistureHundredHour,
-    double moistureLiveHerbaceous, double moistureLiveWoody, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode,
-    double windSpeed, double windDirection, double slope, double aspect, double canopyCover, double canopyHeight, double crownRatio)
-{
-    surface_.updateSurfaceInputs(fuelModelNumber, moistureOneHour, moistureTenHour, moistureHundredHour, moistureLiveHerbaceous,
-        moistureLiveWoody, windHeightInputMode, windSpeed, windDirection, slope, aspect, canopyCover, canopyHeight, crownRatio);
-    surface_.setTwoFuelModelsMethod(TwoFuelModels::NO_METHOD);
-}
-
-void  BehaveRun::updateSurfaceInputsForTwoFuelModels(int firstfuelModelNumber, int secondFuelModelNumber,
-    double moistureOneHour, double moistureTenHour, double moistureHundredHour, double moistureLiveHerbaceous, double moistureLiveWoody,
-    WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode, double windSpeed, double windDirection,
-    double firstFuelModelCoverage, TwoFuelModels::TwoFuelModelsEnum twoFuelModelsMethod, double slope, double aspect,
-    double canopyCover, double canopyHeight, double crownRatio)
-{
-    surface_.updateSurfaceInputsForTwoFuelModels(firstfuelModelNumber, secondFuelModelNumber, moistureOneHour, moistureTenHour,
-        moistureHundredHour, moistureLiveHerbaceous, moistureLiveWoody, windHeightInputMode, windSpeed, windDirection,
-        firstFuelModelCoverage, twoFuelModelsMethod, slope, aspect, canopyCover, canopyHeight, crownRatio);
-}
-
-void BehaveRun::updateSurfaceInputsForPalmettoGallbery(double moistureOneHour, double moistureTenHour, double moistureHundredHour,
-    double moistureLiveHerbaceous, double moistureLiveWoody, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode,
-    double windSpeed, double windDirection, double ageOfRough, double heightOfUnderstory, double palmettoCoverage,
-    double overstoryBasalArea, double slope, double aspect, double canopyCover, double canopyHeight, double crownRatio)
-{
-    surface_.updateSurfaceInputsForPalmettoGallbery(moistureOneHour, moistureTenHour, moistureHundredHour, moistureLiveHerbaceous, 
-        moistureLiveWoody, windHeightInputMode, windSpeed, windDirection, ageOfRough, heightOfUnderstory, palmettoCoverage, 
-        overstoryBasalArea, slope, aspect, canopyCover, canopyHeight, crownRatio);
-}
-
-void BehaveRun::updateSurfaceInputsForWesternAspen(int aspenFuelModelNumber, double aspenCuringLevel,
-    AspenFireSeverity::AspenFireSeverityEnum aspenFireSeverity, double DBH, double moistureOneHour, double moistureTenHour,
-    double moistureHundredHour, double moistureLiveHerbaceous, double moistureLiveWoody,
-    WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode, double windSpeed, double windDirection, double slope,
-    double aspect, double canopyCover, double canopyHeight, double crownRatio)
-{
-    surface_.updateSurfaceInputsForWesternAspen(aspenFuelModelNumber, aspenCuringLevel, aspenFireSeverity, DBH, moistureOneHour,
-        moistureTenHour, moistureHundredHour, moistureLiveHerbaceous, moistureLiveWoody, windHeightInputMode, windSpeed, windDirection,
-        slope, aspect, canopyCover, canopyHeight, crownRatio);
-}
-
-void BehaveRun::doSurfaceRunInDirectionOfMaxSpread()
-{
-    surface_.doSurfaceRunInDirectionOfMaxSpread();
-}
-
-void BehaveRun::doSurfaceRunInDirectionOfInterest(double directionOfInterest)
-{
-    // Calculate SURFACE Module outputs
-    surface_.doSurfaceRunInDirectionOfInterest(directionOfInterest);
-}
-
-void BehaveRun::setSlopeInputMode(SlopeInputMode::SlopeInputModeEnum slopeInputMode)
-{
-    surface_.setSlopeInputMode(slopeInputMode);
-}
-
-WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum BehaveRun::getWindAndSpreadOrientationMode() const
-{
-    return surface_.getWindAndSpreadOrientationMode();
-}
-
-WindHeightInputMode::WindHeightInputModeEnum BehaveRun::getWindHeightInputMode() const
-{
-    return surface_.getWindHeightInputMode();
-}
-
-SlopeInputMode::SlopeInputModeEnum BehaveRun::getSlopeInputMode() const
-{
-    return surface_.getSlopeInputMode();
-}
-
-double BehaveRun::getSurfaceFireSpreadRate() const
-{
-    const double FEET_PER_MIN_TO_CHAINS_PER_HOUR = 10.0 / 11.0; // conversion factor from ft/min to chains/hr
-    double surfaceFireForwardSpreadRate = surface_.getSpreadRate();
-    return surfaceFireForwardSpreadRate *= FEET_PER_MIN_TO_CHAINS_PER_HOUR;
-}
-
-double BehaveRun::getDirectionOfMaxSpread() const
-{
-    return surface_.getDirectionOfMaxSpread();
-}
-
-double BehaveRun::getFlameLength() const
-{
-    return surface_.getFlameLength();
-}
-
-double BehaveRun::getFireLengthToWidthRatio() const
-{
-    return surface_.getFireLengthToWidthRatio();
-}
-
-double BehaveRun::getFireEccentricity() const
-{
-    return surface_.getFireEccentricity();
-}
-
-double BehaveRun::getSurfaceFirelineIntensity() const
-{
-    return surface_.getFirelineIntensity();
-}
-
-double BehaveRun::getMidflameWindspeed() const
-{
-    return surface_.getMidflameWindspeed();
-}
-
-double BehaveRun::getEllipticalA() const
-{
-    return surface_.getEllipticalA();
-}
-
-double BehaveRun::getEllipticalB() const
-{
-    return surface_.getEllipticalB();
-}
-
-double BehaveRun::getEllipticalC() const
-{
-    return surface_.getEllipticalC();
-}
-
-double BehaveRun::getWindSpeed() const
-{
-    return surface_.getWindSpeed();
-}
-
-double BehaveRun::getWindDirection() const
-{
-    return surface_.getWindDirection();
-}
-
-double BehaveRun::getSlope() const
-{
-    return surface_.getSlope();
-}
-
-double BehaveRun::getAspect() const
-{
-    return surface_.getAspect();
+    surface.initializeMembers();
+    crown.initializeMembers();
+    spot.initializeMembers();
+    ignite.initializeMembers();
+    safety.initializeMembers();
 }
 
 bool BehaveRun::isFuelModelDefined(int fuelModelNumber) const
@@ -314,148 +88,27 @@ bool BehaveRun::isFuelModelDefined(int fuelModelNumber) const
     return fuelModelSet_->isFuelModelDefined(fuelModelNumber);
 }
 
-double BehaveRun::getFuelLoadOneHour(int fuelModelNumber) const
+double BehaveRun::getFuelLoadOneHour(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const
 {
-	return fuelModelSet_->getFuelLoadOneHour(fuelModelNumber);
+    return fuelModelSet_->getFuelLoadOneHour(fuelModelNumber, loadingUnits);
 }
 
-double BehaveRun::getFuelLoadTenHour(int fuelModelNumber) const
+double BehaveRun::getFuelLoadTenHour(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const
 {
-	return fuelModelSet_->getFuelLoadTenHour(fuelModelNumber);
+    return fuelModelSet_->getFuelLoadTenHour(fuelModelNumber, loadingUnits);
 }
 
-double BehaveRun::getFuelLoadHundredHour(int fuelModelNumber) const
+double BehaveRun::getFuelLoadHundredHour(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const
 {
-	return fuelModelSet_->getFuelLoadHundredHour(fuelModelNumber);
+    return fuelModelSet_->getFuelLoadHundredHour(fuelModelNumber, loadingUnits);
 }
 
-double BehaveRun::getFuelLoadLiveHerbaceous(int fuelModelNumber) const
+double BehaveRun::getFuelLoadLiveHerbaceous(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const
 {
-	return fuelModelSet_->getFuelLoadLiveHerbaceous(fuelModelNumber);
+    return fuelModelSet_->getFuelLoadLiveHerbaceous(fuelModelNumber, loadingUnits);
 }
 
-double BehaveRun::getFuelLoadLiveWoody(int fuelModelNumber) const
+double BehaveRun::getFuelLoadLiveWoody(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const
 {
-	return fuelModelSet_->getFuelLoadLiveWoody(fuelModelNumber);
-}
-
-int BehaveRun::getFuelModelNumber() const
-{
-	return surface_.getFuelModelNumber();
-}
-
-double BehaveRun::getMoistureOneHour() const
-{
-    return surface_.getMoistureOneHour();
-}
-
-double BehaveRun::getMoistureTenHour() const
-{
-    return surface_.getMoistureTenHour();
-}
-
-double BehaveRun::getMoistureHundredHour() const
-{
-    return surface_.getMoistureHundredHour();
-}
-
-double BehaveRun::getMoistureLiveHerbaceous() const
-{
-    return surface_.getMoistureLiveHerbaceous();
-}
-
-double BehaveRun::getMoistureLiveWoody() const
-{
-    return surface_.getMoistureLiveWoody();
-}
-
-
-
-double BehaveRun::getCanopyCover() const
-{
-    return surface_.getCanopyCover();
-}
-
-double BehaveRun::getCanopyHeight() const
-{
-    return surface_.getCanopyHeight();
-}
-
-double BehaveRun::getCrownRatio() const
-{
-    return surface_.getCrownRatio();
-}
-
-void BehaveRun::updateCrownInputs(double canopyBaseHeight, double canopyBulkDensity, double foliarMoisture)
-{
-    crown_.updateCrownInputs(canopyBaseHeight, canopyBulkDensity, foliarMoisture);
-}
-
-void BehaveRun::doCrownRun()
-{
-    // Calculate Crown module outputs
-    crown_.doCrownRun();
-}
-
-double BehaveRun::getCrownFireSpreadRate() const
-{
-    const double FEET_PER_MIN_TO_CHAINS_PER_HOUR = 10.0 / 11.0; // conversion factor from ft/min to chains/hr
-    return crown_.getCrownFireSpreadRate() * FEET_PER_MIN_TO_CHAINS_PER_HOUR;
-}
-
-FireType::FireTypeEnum BehaveRun::getFireType() const
-{
-    return crown_.getFireType();
-}
-
-void BehaveRun::calculateSpottingDistanceFromBurningPile()
-{
-    spot_.calculateSpottingDistanceFromBurningPile();
-}
-
-void BehaveRun::calculateSpottingDistanceFromSurfaceFire()
-{
-    spot_.calculateSpottingDistanceFromSurfaceFire();
-}
-
-void BehaveRun::calculateSpottingDistanceFromTorchingTrees()
-{
-    spot_.calculateSpottingDistanceFromTorchingTrees();
-}
-
-void BehaveRun::updateSpotInputsForBurningPile(SpotFireLocation::SpotFireLocationEnum location, double ridgeToValleyDistance,
-	double ridgeToValleyElevation, double downwindCoverHeight, double buringPileFlameHeight, double windSpeedAtTwentyFeet)
-{
-	spot_.updateSpotInputsForBurningPile(location, ridgeToValleyDistance, ridgeToValleyElevation, downwindCoverHeight,
-		buringPileFlameHeight, windSpeedAtTwentyFeet);
-}
-
-void BehaveRun::updateSpotInputsForSurfaceFire(SpotFireLocation::SpotFireLocationEnum location, double ridgeToValleyDistance,
-	double ridgeToValleyElevation, double downwindCoverHeight, double flameLength, double windSpeedAtTwentyFeet)
-{
-	spot_.updateSpotInputsForSurfaceFire(location, ridgeToValleyDistance, ridgeToValleyElevation, downwindCoverHeight,
-		flameLength, windSpeedAtTwentyFeet);
-}
-
-void BehaveRun::updateSpotInputsForTorchingTrees(SpotFireLocation::SpotFireLocationEnum location, double ridgeToValleyDistance,
-	double ridgeToValleyElevation, double downwindCoverHeight, double torchingTrees, double DBH, double treeHeight,
-	SpotTreeSpecies::SpotTreeSpeciesEnum treeSpecies, double windSpeedAtTwentyFeet)
-{
-	spot_.updateSpotInputsForTorchingTrees(location, ridgeToValleyDistance, ridgeToValleyElevation, downwindCoverHeight,
-		torchingTrees, DBH, treeHeight, treeSpecies, windSpeedAtTwentyFeet);
-}
-
-double BehaveRun::getMaxSpottingDistanceFromBurningPile()
-{
-    return spot_.getMaxSpottingDistanceFromBurningPile();
-}
-
-double BehaveRun::getMaxSpottingDistanceFromSurfaceFire()
-{
-    return spot_.getMaxSpottingDistanceFromSurfaceFire();
-}
-
-double BehaveRun::getMaxSpottingDistanceFromTorchingTrees()
-{
-    return spot_.getMaxSpottingDistanceFromTorchingTrees();
+    return fuelModelSet_->getFuelLoadLiveWoody(fuelModelNumber, loadingUnits);
 }

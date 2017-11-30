@@ -76,6 +76,12 @@ Flickable
             {
                 isNoInput = checkForNoInput(myModel)
                 isInBounds = isInputInBounds(myModel)
+                if(!isInBounds)
+                {
+                    myOutOfRangeDialog.setProperties(myModel)
+                    myOutOfRangeDialog.open()
+                    myModel.text = ""
+                }
             }
             else
             {
@@ -105,6 +111,12 @@ Flickable
         {
             truthValueForInput[0] = isInputInBounds(fuelModelNumberModel)
         }
+        if(!truthValueForInput[0])
+        {
+            myOutOfRangeDialog.setProperties(fuelModelNumberModel)
+            myOutOfRangeDialog.open()
+            myModel.text = ""
+        }
 
         // Check bounds of fuel moisture only if needed for particular fuel model
         truthValueForInput[1] = checkBoundsIfFuelMoistureNeeded(oneHourMoistureModel)
@@ -118,11 +130,24 @@ Flickable
         {
             truthValueForInput[6] = isInputInBounds(windSpeedModel)
         }
+        if(!truthValueForInput[6])
+        {
+            myOutOfRangeDialog.setProperties(windSpeedModel)
+            myOutOfRangeDialog.open()
+            myModel.text = ""
+        }
+
 
         isNoInput = checkForNoInput(slopeModel)
         if(!isNoInput)
         {
             truthValueForInput[7] = isInputInBounds(slopeModel)
+        }
+        if(!truthValueForInput[7])
+        {
+            myOutOfRangeDialog.setProperties(slopeModel)
+            myOutOfRangeDialog.open()
+            myModel.text = ""
         }
 
         return (truthValueForInput[0] && truthValueForInput[1] &&
@@ -133,24 +158,14 @@ Flickable
 
     function processInput(myModel)
     {
-        var isInBounds = isInputInBounds(myModel)
-        if(isInBounds)
+        behave.userInputChanged(myModel.text, myModel.myInputSignal)
+        if (myModel.myInputSignal === BehaveQML.FuelModelNumberSignal)
         {
-            behave.userInputChanged(myModel.text, myModel.myInputSignal)
-            if (myModel.myInputSignal === BehaveQML.FuelModelNumberSignal)
-            {
-                oneHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.OneHourMoistureSignal)
-                tenHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.TenHourMoistureSignal)
-                hundredHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.HundredHourMoistureSignal)
-                liveHerbaceousMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.LiveHerbaceousMoistureSignal)
-                liveWoodyMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.LiveWoodyMoistureSignal)
-            }
-        }
-        else
-        {
-            myOutOfRangeDialog.setProperties(myModel)
-            myOutOfRangeDialog.open()
-            myModel.text = ""
+            oneHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.OneHourMoistureSignal)
+            tenHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.TenHourMoistureSignal)
+            hundredHourMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.HundredHourMoistureSignal)
+            liveHerbaceousMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.LiveHerbaceousMoistureSignal)
+            liveWoodyMoistureModel.isFuelMoistureNeeded = behave.isFuelMoistureNeeded(fuelModelNumberModel.text, BehaveQML.LiveWoodyMoistureSignal)
         }
     }
 
@@ -295,6 +310,7 @@ Flickable
                 {
                     if(text !== "")
                     {
+                        //fuelModelNumberModel.text = text.replace(/^0+/, '')
                         fuelModelNumberModel.text = text
                         processInput(fuelModelNumberModel)
                     }
@@ -378,31 +394,6 @@ Flickable
                      updateMoistureInputStyle(oneHourMoistureModel, oneHourMoistureText)
                 }
             }
-
-//            This is a test of the older version of Tumbler with instantaneous setter function
-//            Tumbler
-//            {
-//                id: myTumbler
-
-//                anchors.verticalCenter: parent.verticalCenter
-
-//                TumblerColumn
-//                {
-//                      model: 300
-//                }
-//                //visibleItemCount: 3
-
-//                //font.pointSize: 30
-
-//                height: sizeSettingText.paintedHeight * 0.80
-//                width: sizeSettingText.paintedWidth
-
-//                Component.onCompleted:
-//                {
-//                    set the value of tumbler at colunm 0 to 200 in 0 milliseconds
-//                    setCurrentIndexAt(0, 200, 0)
-//                }
-//            }
         }
 
         Row
@@ -849,6 +840,7 @@ Flickable
                         spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
                         flameLengthText.text = Math.round(behave.flameLength * 10) / 10
                     }
+
                     textInputContainer.forceActiveFocus()
                 }
             }

@@ -44,27 +44,27 @@ bool BehaveQML::isFuelMoistureNeeded(const int& fuelModelNumber,  const BehaveQM
     {
         case InputSignal::OneHourMoistureSignal:
         {
-            load = behaveRun.getFuelLoadOneHour(fuelModelNumber);
+            load = behaveRun.getFuelLoadOneHour(fuelModelNumber, LoadingUnits::TonsPerAcre);
             break;
         }
         case InputSignal::TenHourMoistureSignal:
         {
-            load = behaveRun.getFuelLoadTenHour(fuelModelNumber);
+            load = behaveRun.getFuelLoadTenHour(fuelModelNumber, LoadingUnits::TonsPerAcre);
             break;
         }
         case InputSignal::HundredHourMoistureSignal:
         {
-            load = behaveRun.getFuelLoadHundredHour(fuelModelNumber);
+            load = behaveRun.getFuelLoadHundredHour(fuelModelNumber, LoadingUnits::TonsPerAcre);
             break;
         }
         case InputSignal::LiveHerbaceousMoistureSignal:
         {
-            load = behaveRun.getFuelLoadLiveHerbaceous(fuelModelNumber);
+            load = behaveRun.getFuelLoadLiveHerbaceous(fuelModelNumber, LoadingUnits::TonsPerAcre);
             break;
         }
         case InputSignal::LiveWoodyMoistureSignal:
         {
-            load = behaveRun.getFuelLoadLiveWoody(fuelModelNumber);
+            load = behaveRun.getFuelLoadLiveWoody(fuelModelNumber, LoadingUnits::TonsPerAcre);
             break;
         }
         default:
@@ -90,50 +90,49 @@ void BehaveQML::userInputChanged(const QString& text, const InputSignal& inputSi
     {
         case InputSignal::FuelModelNumberSignal:
         {
-            behaveRun.setFuelModelNumber(text.toInt());
+            behaveRun.surface.setFuelModelNumber(text.toInt());
             break;
         }
         case InputSignal::OneHourMoistureSignal:
         {
-            behaveRun.setMoistureOneHour(text.toDouble());
+            behaveRun.surface.setMoistureOneHour(text.toDouble(), MoistureUnits::Percent);
             break;
         }
         case InputSignal::TenHourMoistureSignal:
         {
-            behaveRun.setMoistureTenHour(text.toDouble());
+            behaveRun.surface.setMoistureTenHour(text.toDouble(), MoistureUnits::Percent);
             break;
         }
         case InputSignal::HundredHourMoistureSignal:
         {
-            behaveRun.setMoistureHundredHour(text.toDouble());
+            behaveRun.surface.setMoistureHundredHour(text.toDouble(), MoistureUnits::Percent);
             break;
         }
         case InputSignal::LiveHerbaceousMoistureSignal:
         {
-            behaveRun.setMoistureLiveHerbaceous(text.toDouble());
+            behaveRun.surface.setMoistureLiveHerbaceous(text.toDouble(), MoistureUnits::Percent);
             break;
         }
         case InputSignal::LiveWoodyMoistureSignal:
         {
-            behaveRun.setMoistureLiveWoody(text.toDouble());
+            behaveRun.surface.setMoistureLiveWoody(text.toDouble(), MoistureUnits::Percent);
             break;
         }
         case InputSignal::WindSpeedSignal:
         {
-            behaveRun.setWindSpeed(text.toDouble());
+            behaveRun.surface.setWindSpeed(text.toDouble(), SpeedUnits::MilesPerHour, WindHeightInputMode::DirectMidflame);
             break;
         }
         case InputSignal::SlopeSignal:
         {
-            behaveRun.setSlope(text.toDouble());
+            behaveRun.surface.setSlope(text.toDouble(), SlopeUnits::Percent);
             break;
         }
         case InputSignal::CalculateSignal:
         {
-            double directionOfInterest = 0;
-            behaveRun.doSurfaceRunInDirectionOfInterest(directionOfInterest);
-            double localSpreadRate = behaveRun.getSurfaceFireSpreadRate();
-            double localFlameLength = behaveRun.getFlameLength();
+            behaveRun.surface.doSurfaceRunInDirectionOfMaxSpread();
+            double localSpreadRate = behaveRun.surface.getSpreadRate(SpeedUnits::ChainsPerHour);
+            double localFlameLength = behaveRun.surface.getFlameLength(LengthUnits::Feet);
             spreadRate_ = QString::fromStdString(my_to_string(localSpreadRate));
             flameLength_ = QString::fromStdString(my_to_string(localFlameLength));
             //emit spreadRateChanged(inputSignal);
@@ -161,5 +160,5 @@ void BehaveQML::userInputChanged(const QString& text, const InputSignal& inputSi
 void BehaveQML::calculateClicked()
 {
     double directionOfInterest = 0;
-    behaveRun.doSurfaceRunInDirectionOfInterest(directionOfInterest);
+    behaveRun.surface.doSurfaceRunInDirectionOfInterest(directionOfInterest);
 }

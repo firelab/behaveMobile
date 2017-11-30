@@ -24,13 +24,15 @@ Flickable
 
     property int maxInputLabelWidth: longestInputLabel.width
     property int maxUnitLabelWidth: longestUnitLabel.width
-    property int fittedInputLabelWidth: Math.min((Screen.width * 0.4), maxInputLabelWidth)
 
-    property int fittedTextBoxWidth: Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
-    property int fittedTumblerWidth: Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
+    property int fittedInputLabelWidth
+    property int fittedTextBoxWidth
+    property int fittedTumblerWidth
 
     property var comboBoxToFuelModelMapping: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                                               101, 102, 103, 104, 105, 106, 107, 108, 109]
+
+    //property alias finalizedFittedTumblerWidth: fittedTumblerWidth
 
     Text
     {
@@ -311,7 +313,7 @@ Flickable
             Rectangle
             {
                 height: oneHourMoistureTumblerView.height
-                width: oneHourMoistureTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
                 MyTumbler
                 {
@@ -357,7 +359,7 @@ Flickable
             Rectangle
             {
                 height: tenHourMoistureTumblerView.height
-                width: tenHourMoistureTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
 
                 MyTumbler
@@ -403,7 +405,7 @@ Flickable
             Rectangle
             {
                 height: hundredHourMoistureTumblerView.height
-                width: hundredHourMoistureTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
                 MyTumbler
                 {
@@ -448,7 +450,7 @@ Flickable
             Rectangle
             {
                 height: liveHerbaceousMoistureTumblerView.height
-                width: liveHerbaceousMoistureTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
                 MyTumbler
                 {
@@ -493,7 +495,7 @@ Flickable
             Rectangle
             {
                 height: liveWoodyMoistureTumblerView.height
-                width: liveWoodyMoistureTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
                 MyTumbler
                 {
@@ -538,7 +540,7 @@ Flickable
             Rectangle
             {
                 height: windSpeedTumblerView.height
-                width: windSpeedTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
                 MyTumbler
                 {
@@ -584,7 +586,7 @@ Flickable
             Rectangle
             {
                 height: slopeTumblerView.height
-                width: slopeTumblerView.width
+                width: fittedTumblerWidth
                 anchors.verticalCenter: parent.verticalCenter
                 MyTumbler
                 {
@@ -674,7 +676,7 @@ Flickable
                 text: spreadRateModel.text
                 font.pointSize: myStyleModel.font.pointSize
                 width: fittedTextBoxWidth
-                color: "white"
+                color: "black"
                 readOnly: true
             }
         }
@@ -713,7 +715,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 text:  flameLengthModel.text
                 width: fittedTextBoxWidth
-                color: "white"
+                color: "black"
                 readOnly: true
             }
         }
@@ -723,5 +725,12 @@ Flickable
     {
         id: myStyleModel
         font.pointSize: 25
+    }
+
+    Component.onCompleted:
+    {
+        fittedInputLabelWidth = Math.min((Screen.width * 0.4), maxInputLabelWidth)
+        fittedTextBoxWidth = Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
+        fittedTumblerWidth =  Math.max((Screen.width - (fittedInputLabelWidth + maxUnitLabelWidth + 50)), maxUnitLabelWidth)
     }
 }

@@ -32,6 +32,7 @@
 #ifndef SURFACEFIRE_H
 #define SURFACEFIRE_H
 
+#include "fireSize.h"
 #include "surfaceFireReactionIntensity.h"
 #include "surfaceFuelbedIntermediates.h"
 
@@ -41,17 +42,21 @@ class SurfaceFire
 public:
     SurfaceFire();
     SurfaceFire(const SurfaceFire& rhs);
-    SurfaceFire& operator= (const SurfaceFire& rhs);
-    SurfaceFire(const FuelModelSet& fuelModelSet, const SurfaceInputs& surfaceInputs);
+    SurfaceFire& operator=(const SurfaceFire& rhs);
+    SurfaceFire(const FuelModelSet& fuelModelSet, const SurfaceInputs& surfaceInputs, FireSize& size);
     double calculateNoWindNoSlopeSpreadRate(double reactionIntensity, double propagatingFlux, double heatSink);
     double calculateForwardSpreadRate(int fuelModelNumber, bool hasDirectionOfInterest = false, 
         double directionOfInterest = -1.0);
     double calculateSpreadRateAtVector(double directionOfInterest);
     double calculateFlameLength(double firelineIntensity);
+   
+    void initializeMembers();
+    void skipCalculationForZeroLoad();
 
     // Public getters
     double getFuelbedDepth() const;
     double getSpreadRate() const;
+    double getSpreadRateInDirectionOfInterest() const;
     double getDirectionOfMaxSpread() const;
     double getEffectiveWindSpeed() const;
     double getFirelineIntensity() const;
@@ -64,12 +69,12 @@ public:
     double getWindSpeedLimit() const;
     double getReactionIntensity() const;
     double getMidflameWindSpeed() const;
-    double getEllipticalA() const;
-    double getEllipticalB() const;
-    double getEllipticalC() const;
+
     double getWindAdjustmentFactor() const;
     bool getIsWindLimitExceeded() const;
  
+    void calculateMidflameWindSpeed();
+
 protected:
     // Protected setters accessible to friend classes
     void setDirectionOfMaxSpread(double directionOFMaxSpread);
@@ -86,28 +91,26 @@ protected:
     void setMidflameWindSpeed(double midflameWindSpeed);
 
 private:
-    void initializeMembers();
+    void memberwiseCopyAssignment(const SurfaceFire& rhs);
     void calculateHeatPerUnitArea();
     void calculateWindAdjustmentFactor();
     void calculateWindFactor();
     void calculateSlopeFactor();
-    void calculateFireLengthToWidthRatio();
-    void calculateSurfaceFireEccentricity();
+
     void calculateResidenceTime();
-    void calculateFireFirelineIntensity();
+    void calculateFireFirelineIntensity(double forwardSpreadRate);
     void calculateFlameLength();
     void calculateWindSpeedLimit();
     void calculateDirectionOfMaxSpread();
-    void calculateBackingSpreadRate();
-    void calculateMidflameWindSpeed();
+ 
     void calculateEffectiveWindSpeed();
     void applyWindSpeedLimit();
-    void calculateEllipticalDimensions();
     double convertDirectionOfSpreadToRelativeToNorth(double directionOfMaxSpreadFromUpslope) const;
 
     // Pointers and references to other objects
     const FuelModelSet* fuelModelSet_;
     const SurfaceInputs* surfaceInputs_;
+    FireSize* size_;
     SurfaceFuelbedIntermediates surfaceFuelbedIntermediates_;
     SurfaceFireReactionIntensity surfaceFireReactionIntensity_;
   
@@ -124,6 +127,7 @@ private:
     double directionOfMaxSpread_;							// Direction of max fire spread in degrees clockwise from upslope
     double noWindNoSlopeSpreadRate_;						// No-wind-no-slope fire spread rate, Rothermel 1972, equation 52
     double forwardSpreadRate_;								// Maximum rate of fire spread rate, Rothermel 1972, equation 52
+    double spreadRateInDirectionOfInterest_;				// spreadRateInDirectionOfInterest
     double heatPerUnitArea_;                                // Heat per unit area (Btu/ft^2)
     double fireLengthToWidthRatio_;
     double residenceTime_;
@@ -141,7 +145,8 @@ private:
 
     double midflameWindSpeed_; 
     double windAdjustmentFactor_;
-    WindAdjustmentFactorMethod::WindAdjustmentFactorMethodEnum windAdjustmentFactorMethod_;
+    WindAdjustmentFactorShelterMethod::WindAdjustmentFactorShelterMethodEnum windAdjustmentFactorShelterMethod_;
+    WindAdjustmentFactorCalculationMethod::WindAdjustmentFactorCalculationMethodEnum windAdjustmentFactorCalculationMethod_;
     double canopyCrownFraction_;
 
     double aspenMortality_;

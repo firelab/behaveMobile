@@ -28,11 +28,15 @@
 *
 ******************************************************************************/
 
+// TODO: Add unit conversions for energy and incorporate into calculateCrownCriticalSurfaceFireIntensity() - WMC 11/16
+// TODO: Allow for use case in which Crown is run completely without Surface, will involve allowing direct input of HPUA 
+//       and surface flame length, as well as setting all other pertinent surface inputs in Crown's copy of Surface - WMC 11/16
+
 #ifndef CROWN_H
 #define CROWN_H
 
+#include "behaveUnits.h"
 #include "crownInputs.h"
-#include "crownEnums.h"
 #include "surface.h"
 
 class FuelModelSet;
@@ -41,31 +45,90 @@ class Crown
 {
 public:
     Crown() = delete; // No default constructor
-    Crown(const FuelModelSet& fuelModelSet, const Surface& surface);
+    Crown(const FuelModelSet& fuelModelSet);
     ~Crown();
 
     Crown(const Crown &rhs);
-    Crown& operator= (const Crown& rhs);
+    Crown& operator=(const Crown &rhs);
 
     void doCrownRun();
-    void updateCrownInputs(double canopyBaseHeight, double canopyBulkDensity, double foliarMoisture);
-    void setCanopyBaseHeight(double canopyBaseHeight);
-    void setCanopyBulkDensity(double canopyBulkDensity);
-    void setFoliarMoisture(double foliarMoisture);
+  
+    void initializeMembers();
 
-    double getCrownFireSpreadRate() const;
+    // CROWN Module Setters
+    void updateCrownInputs(int fuelModelNumber, double moistureOneHour, double moistureTenHour, double moistureHundredHour,
+        double moistureLiveHerbaceous, double moistureLiveWoody, double moistureFoliar,
+        MoistureUnits::MoistureUnitsEnum  moistureUnits, double windSpeed, SpeedUnits::SpeedUnitsEnum windSpeedUnits,
+        WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode, double windDirection,
+        WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum windAndSpreadOrientationMode,
+        double slope, SlopeUnits::SlopeUnitsEnum slopeUnits, double aspect, double canopyCover, CoverUnits::CoverUnitsEnum coverUnits,
+        double canopyHeight, double canopyBaseHeight, LengthUnits::LengthUnitsEnum canopyHeightUnits, double crownRatio, 
+        double canopyBulkDensity, DensityUnits::DensityUnitsEnum densityUnits);
+    void setCanopyBaseHeight(double canopyBaseHeight, LengthUnits::LengthUnitsEnum canopyHeightUnits);
+    void setCanopyBulkDensity(double canopyBulkDensity, DensityUnits::DensityUnitsEnum densityUnits);
+    void setMoistureFoliar(double foliarMoisture, MoistureUnits::MoistureUnitsEnum moistureUnits);
+
+    // Crown Module Getters
+    double getCanopyBaseHeight() const;
+    double getCanopyBulkDensity() const;
+    double getMoistureFoliar(MoistureUnits::MoistureUnitsEnum moistureUnits) const;
+    //double getSpreadRateBaseOnFireType(SpeedUnits::SpeedUnitsEnum desiredUnits) const;
+    double getCrownFireSpreadRate(SpeedUnits::SpeedUnitsEnum spreadRateUnits) const;
+    double getSurfaceFireSpreadRate(SpeedUnits::SpeedUnitsEnum spreadRateUnits) const;
+    double getCrownFirelineIntensity() const;
+    double getCrownFlameLength(LengthUnits::LengthUnitsEnum flameLengthUnits) const;
     FireType::FireTypeEnum getFireType() const;
 
+    double getCrownFireLengthToWidthRatio() const;
+
+    // SURFACE Module Inputs Setters
+    void updateCrownsSurfaceInputs(int fuelModelNumber, double moistureOneHour, double moistureTenHour, double moistureHundredHour,
+        double moistureLiveHerbaceous, double moistureLiveWoody, MoistureUnits::MoistureUnitsEnum moistureUnits, double windSpeed, 
+        SpeedUnits::SpeedUnitsEnum windSpeedUnits, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode, double windDirection,
+        WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum windAndSpreadOrientationMode, double slope, 
+        SlopeUnits::SlopeUnitsEnum slopeUnits, double aspect, double canopyCover, CoverUnits::CoverUnitsEnum coverUnits, double canopyHeight, 
+        LengthUnits::LengthUnitsEnum canopyHeightUnits, double crownRatio);
+    void setCanopyCover(double canopyCover, CoverUnits::CoverUnitsEnum coverUnits);
+    void setCanopyHeight(double canopyHeight, LengthUnits::LengthUnitsEnum canopyHeightUnits);
+    void setCrownRatio(double crownRatio);
+    void setFuelModelSet(FuelModelSet& fuelModelSet);
+    void setFuelModelNumber(int fuelModelNumber);
+    void setMoistureOneHour(double moistureOneHour, MoistureUnits::MoistureUnitsEnum moistureUnits);
+    void setMoistureTenHour(double moistureTenHour, MoistureUnits::MoistureUnitsEnum moistureUnits);
+    void setMoistureHundredHour(double moistureHundredHour, MoistureUnits::MoistureUnitsEnum moistureUnits);
+    void setMoistureLiveHerbaceous(double moistureLiveHerbaceous, MoistureUnits::MoistureUnitsEnum moistureUnits);
+    void setMoistureLiveWoody(double moistureLiveWoody, MoistureUnits::MoistureUnitsEnum moistureUnits);
+    void setSlope(double slope, SlopeUnits::SlopeUnitsEnum slopeUnits);
+    void setAspect(double aspect);
+    void setWindSpeed(double windSpeed, SpeedUnits::SpeedUnitsEnum windSpeedUnits, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode);
+    void setWindDirection(double windDirection);
+    void setWindHeightInputMode(WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode);
+    void setWindAndSpreadOrientationMode(WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum windAndSpreadAngleMode);
+
+    // SurfaceInputs getters
+    int getFuelModelNumber() const;
+    double getMoistureOneHour(MoistureUnits::MoistureUnitsEnum moistureUnits) const;
+    double getMoistureTenHour(MoistureUnits::MoistureUnitsEnum moistureUnits) const;
+    double getMoistureHundredHour(MoistureUnits::MoistureUnitsEnum moistureUnits) const;
+    double getMoistureLiveHerbaceous(MoistureUnits::MoistureUnitsEnum moistureUnits) const;
+    double getMoistureLiveWoody(MoistureUnits::MoistureUnitsEnum moistureUnits) const;
+    double getWindSpeed(SpeedUnits::SpeedUnitsEnum windSpeedUnits, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode) const;
+    double getWindDirection() const;
+    double getSlope(SlopeUnits::SlopeUnitsEnum slopeUnits) const;
+    double getAspect() const;
+    double getCanopyCover(CoverUnits::CoverUnitsEnum canopyCoverUnits) const;
+    double getCanopyHeight(LengthUnits::LengthUnitsEnum canopyHeighUnits) const;
+    double getCrownRatio() const;
+
 private:
-    const FuelModelSet* fuelModelSet_;              // pointer to BehaveRun's FuelModelSet object
-    CrownInputs crownInputs_;                       // pointer to BehaveRun's CrownInputs object
+    const FuelModelSet* fuelModelSet_;
+    CrownInputs crownInputs_;
     
     // SURFACE module components
-    const Surface* surface_;                        // pointer to the BehaveRun's Surface object
-    Surface crownDeepCopyOfSurface_;                // deep copy of Surface's surface inputs to allow parallel runs in Surface
+    Surface surface_;
 
     // Private methods
-    void initializeMemmbers();
+    void memberwiseCopyAssignment(const Crown& rhs);
     void calculateCanopyHeatPerUnitArea();
     void calculateCrownFireHeatPerUnitArea();
     void calculateCrownFuelLoad();
@@ -80,12 +143,13 @@ private:
     void calcualteCrownFirePowerRatio();
     void calculateCrownFireActiveRatio();
     void calculateFireType();
-    double calculateWindSpeedAtTwentyFeet();
+    void calculateWindSpeedAtTwentyFeet();
+    void calculateCrownLengthToWidthRatio();
 
     // Member variables
     FireType::FireTypeEnum fireType_;               // Classification based on corwn fire active and transition ratios
-    double crownCopyOfSurfaceHeatPerUnitArea_;      // Copy of surface hpua used for parallel surface runs (Btu/ft^2)
-    double crownCopyOfSurfaceFirelineIntensity_;    // Copy of surface fireline intensity used for parallel surface runs
+    double crownsSurfaceHeatPerUnitArea_;           // Copy of surface hpua used for parallel surface runs (Btu/ft^2)
+    double crownsSurfaceFirelineIntensity_;         // Copy of surface fireline intensity used for parallel surface runs
     double crownFuelLoad_;                          // Crown fire fuel load (lb / ft^2)
     double canopyHeatPerUnitArea_;                  // Canopy heat per unit area (Btu/ft^2)
     double crownFireHeatPerUnitArea_;               // Crown fire heat per unit area (Btu/ft^2)
@@ -100,6 +164,7 @@ private:
     double crownFirePowerRatio_;                    // Crown fire power ratio
     double crownFireActiveRatio_;                   // Crown fire active ratio
     double crownFireTransitionRatio_;               // Crown fire transition ratio
+    double crownFireLengthToWidthRatio_;            // Crown fire transition ratio
     double windSpeedAtTwentyFeet_;
 };
 

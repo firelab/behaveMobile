@@ -791,7 +791,7 @@ Flickable
                 text: spreadRateModel.text
                 //style: touchStyle
                 font.pointSize: myStyleModel.font.pointSize
-                color: "white"
+                color: "black"
 
                 readOnly: true
             }
@@ -830,7 +830,7 @@ Flickable
                 anchors.margins: 25
                 text:  flameLengthModel.text
                 //style: touchStyle
-                color: "white"
+                color: "black"
 
                 readOnly: true
             }

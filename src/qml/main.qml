@@ -114,7 +114,6 @@ ApplicationWindow
         }
         onCurrentIndexChanged:
         {
-
             oneHourMoistureModel.text = currentIndex + lower
         }
     }
@@ -467,25 +466,24 @@ ApplicationWindow
         id: pageModel
         ListElement
         {
-
-            title: "Text Boxes"
+            title: "Surface Fire"
             page: "content/TextInputPage.qml"
         }
-        ListElement
-        {
-            title: "Combo Box and Spin Boxes"
-            page: "content/ComboBoxAndSpinBoxPage.qml"
-        }
-        ListElement
-        {
-            title: "All Combo Boxes"
-            page: "content/AllComboBoxesPage.qml"
-        }
-        ListElement
-        {
-            title: "Combo Box and Tumblers"
-            page: "content/ComboBoxAndTumblerPage.qml"
-        }
+//        ListElement
+//        {
+//            title: "Combo Box and Spin Boxes"
+//            page: "content/ComboBoxAndSpinBoxPage.qml"
+//        }
+//        ListElement
+//        {
+//            title: "All Combo Boxes"
+//            page: "content/AllComboBoxesPage.qml"
+//        }
+//        ListElement
+//        {
+//            title: "Combo Box and Tumblers"
+//            page: "content/ComboBoxAndTumblerPage.qml"
+//        }
     }
 
     StackView

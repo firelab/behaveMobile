@@ -1,7 +1,10 @@
 /******************************************************************************
 *
 * Project:  CodeBlocks
-* Purpose:  Various constant values used by the Crown class
+* Purpose:  Class to handle resource vector required for Contain simulations.
+*           Allows for original Contain source files to be used without
+*           modification with a C++ interface to be used in Behave-like
+*           applications
 * Author:   William Chatham <wchatham@fs.fed.us>
 *
 *******************************************************************************
@@ -25,19 +28,30 @@
 *
 ******************************************************************************/
 
+#ifndef CONTAINFORCEADAPTER_H
+#define CONTAINFORCEADAPTER_H
 
-#ifndef CROWNENUMS_H
-#define CROWNENUMS_H
+#include <string>
+#include <vector>
+#include "ContainResource.h"
 
-struct FireType
+class ContainForceAdapter
 {
-    enum FireTypeEnum
-    {
-        SURFACE = 0,    // surface fire with no torching or crown fire spread.
-        TORCHING = 1,   // surface fire with torching.
-        CONDITIONAL_CROWN_FIRE = 2, // active crown fire possible if the fire transitions to the overstory        
-        CROWNING = 3    // active crown fire, fire is spreading through the canopy.
-    };
+public:
+    ContainForceAdapter();
+    ~ContainForceAdapter();
+
+    void addResource(Sem::ContainResource& resource);
+    void addResource(double arrival, double production, double duration,
+        Sem::ContainFlank flank, std::string desc, double baseCost, double hourCost);
+    double firstArrival(Sem::ContainFlank flank) const;
+
+    int removeResourceAt(int index);
+    int removeResourceWithThisDesc(std::string desc);
+    int removeAllResourcesWithThisDesc(std::string desc);
+
+    std::vector<Sem::ContainResource> resourceVector;
+private:
 };
 
-#endif // CROWNENUMS_H
+#endif // CONTAINADAPTER_H

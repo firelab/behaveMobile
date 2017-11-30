@@ -26,14 +26,16 @@
 *
 ******************************************************************************/
 
-// TODO: Need to revisit how the Two Fuel Models module is organized and handled - WMC 02/2016
-
 #ifndef BEHAVERUN_H
 #define BEHAVERUN_H
 
-#include "surface.h"
+#include "behaveUnits.h"
+#include "ContainAdapter.h"
 #include "crown.h"
+#include "ignite.h"
+#include "safety.h"
 #include "spot.h"
+#include "surface.h"
 
 class FuelModels;
 
@@ -41,135 +43,46 @@ class BehaveRun
 {
 public:
     BehaveRun() = delete; // There is no default constructor
-    explicit BehaveRun(FuelModelSet &fuelModelSet);
+    explicit BehaveRun(FuelModelSet& fuelModelSet);
     
-    BehaveRun(const BehaveRun &rhs);
-    BehaveRun& operator= (const BehaveRun& rhs);
+    BehaveRun(const BehaveRun& rhs);
+    BehaveRun& operator=(const BehaveRun& rhs);
     ~BehaveRun();
 
     // FuelModelSet Methods
     bool isFuelModelDefined(int fuelModelNumber) const;
-	double getFuelLoadOneHour(int fuelModelNumber) const;
-	double getFuelLoadTenHour(int fuelModelNumber) const;
-	double getFuelLoadHundredHour(int fuelModelNumber) const;
-	double getFuelLoadLiveHerbaceous(int fuelModelNumber) const;
-	double getFuelLoadLiveWoody(int fuelModelNumber) const;
+	double getFuelLoadOneHour(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const;
+	double getFuelLoadTenHour(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const;
+	double getFuelLoadHundredHour(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const;
+	double getFuelLoadLiveHerbaceous(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const;
+	double getFuelLoadLiveWoody(int fuelModelNumber, LoadingUnits::LoadingUnitsEnum loadingUnits) const;
 
-    // SURFACE 
-    void doSurfaceRunInDirectionOfMaxSpread();
-    void doSurfaceRunInDirectionOfInterest(double directionOfInterest);
-    
-    // SURFACE Module Inputs Setters
-    void setCanopyCover(double canopyCover);
-    void setCanopyHeight(double canopyHeight);
-    void setCrownRatio(double crownRatio);
     void setFuelModelSet(FuelModelSet& fuelModelSet);
-    void setFuelModelNumber(int fuelModelNumber);
-    void setMoistureOneHour(double moistureOneHour);
-    void setMoistureTenHour(double moistureTenHour);
-    void setMoistureHundredHour(double moistureHundredHour);
-    void setMoistureLiveHerbaceous(double moistureLiveHerbaceous);
-    void setMoistureLiveWoody(double moistureLiveWoody);
-    void setSlope(double slope);
-    void setAspect(double aspect);
-    void setWindSpeed(double windSpeed);
-    void setWindDirection(double windDirection);
-    void setWindHeightInputMode(WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode);
-    void setWindAndSpreadOrientationMode(WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum windAndSpreadAngleMode);
-    void setTwoFuelModelsMethod(TwoFuelModels::TwoFuelModelsEnum twoFuelModelsMethod);
-    void setSlopeInputMode(SlopeInputMode::SlopeInputModeEnum slopeInputMode);
-    void setFirstFuelModelNumber(int firstFuelModelNumber);
-    void setSecondFuelModelNumber(int secondFuelModelNumber);
-    void setTwoFuelModelsFirstFuelModelCoverage(double firstFuelModelCoverage);
-    void updateSurfaceInputs(int fuelModelNumber, double moistureOneHour, double moistureTenHour, double moistureHundredHour,
-        double moistureLiveHerbaceous, double moistureLiveWoody, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode,
-        double windSpeed, double windDirection, double slope, double aspect, double canopyCover, double canopyHeight, double crownRatio);
-    void updateSurfaceInputsForTwoFuelModels(int firstfuelModelNumber, int secondFuelModelNumber, double moistureOneHour,
-        double moistureTenHour, double moistureHundredHour, double moistureLiveHerbaceous, double moistureLiveWoody,
-        WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode, double windSpeed, double windDirection,
-        double firstFuelModelCoverage, TwoFuelModels::TwoFuelModelsEnum twoFuelModelsMethod, double slope, double aspect,
-        double canopyCover, double canopyHeight, double crownRatio);
-    void updateSurfaceInputsForPalmettoGallbery(double moistureOneHour, double moistureTenHour, double moistureHundredHour,
-        double moistureLiveHerbaceous, double moistureLiveWoody, WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode,
-        double windSpeed, double windDirection, double ageOfRough, double heightOfUnderstory, double palmettoCoverage,
-        double overstoryBasalArea, double slope, double aspect, double canopyCover, double canopyHeight, double crownRatio);
-    void updateSurfaceInputsForWesternAspen(int aspenFuelModelNumber, double aspenCuringLevel, 
-        AspenFireSeverity::AspenFireSeverityEnum aspenFireSeverity, double DBH, double moistureOneHour, double moistureTenHour, 
-        double moistureHundredHour, double moistureLiveHerbaceous, double moistureLiveWoody,
-        WindHeightInputMode::WindHeightInputModeEnum windHeightInputMode, double windSpeed, double windDirection, double slope,
-        double aspect, double canopyCover, double canopyHeight, double crownRatio);
+    void reinitialize();
 
-    // SURFACE Module Getters
-	int getFuelModelNumber() const;
-    double getMoistureOneHour() const;
-    double getMoistureTenHour() const;
-    double getMoistureHundredHour() const;
-    double getMoistureLiveHerbaceous() const;
-    double getMoistureLiveWoody() const;
-    double getWindSpeed() const;
-    double getWindDirection() const;
-    double getSlope() const;
-    double getAspect() const;
-    double getCanopyCover() const;
-    double getCanopyHeight() const;
-    double getCrownRatio() const;
-    double getSurfaceFireSpreadRate() const;
-    double getDirectionOfMaxSpread() const;
-    double getFlameLength() const;
-    double getFireLengthToWidthRatio() const;
-    double getFireEccentricity() const;
-    double getSurfaceFirelineIntensity() const;
-    double getMidflameWindspeed() const;
-    double getEllipticalA() const;
-    double getEllipticalB() const;
-    double getEllipticalC() const;
-    WindAndSpreadOrientationMode::WindAndSpreadOrientationModeEnum getWindAndSpreadOrientationMode() const;
-    WindHeightInputMode::WindHeightInputModeEnum getWindHeightInputMode() const;
-    SlopeInputMode::SlopeInputModeEnum getSlopeInputMode() const;
+ // SURFACE Module
+Surface surface;
 
-    // CROWN Module
-    void doCrownRun();
+// CROWN Module
+Crown crown;
 
-    // CROWN Module Setters
-    void updateCrownInputs(double canopyBaseHeight, double canopyBulkDensity, double foliarMoisture);
+// SPOT Module
+Spot spot;
 
-    // CROWN Module Getters
-    double getCrownFireSpreadRate() const;
-    FireType::FireTypeEnum getFireType() const;
+//  Ignite Module
+Ignite ignite;
 
-    // SPOT Module
-    void calculateSpottingDistanceFromBurningPile();
-    void calculateSpottingDistanceFromSurfaceFire();
-    void calculateSpottingDistanceFromTorchingTrees();
+//  Contain Module
+ContainAdapter contain;
 
-	// SPOT Module Setters
-	void updateSpotInputsForBurningPile(SpotFireLocation::SpotFireLocationEnum location, double ridgeToValleyDistance,
-		double ridgeToValleyElevation, double downwindCoverHeight, double buringPileFlameHeight,
-		double windSpeedAtTwentyFeet = SpotSurfaceInputs::NOT_SET);
-	void updateSpotInputsForSurfaceFire(SpotFireLocation::SpotFireLocationEnum location, double ridgeToValleyDistance,
-		double ridgeToValleyElevation, double downwindCoverHeight, double flameLength = SpotSurfaceInputs::NOT_SET,
-		double windSpeedAtTwentyFeet = SpotSurfaceInputs::NOT_SET);
-	void updateSpotInputsForTorchingTrees(SpotFireLocation::SpotFireLocationEnum location, double ridgeToValleyDistance,
-		double ridgeToValleyElevation, double downwindCoverHeight, double torchingTrees, double DBH, double treeHeight,
-		SpotTreeSpecies::SpotTreeSpeciesEnum treeSpecies, double windSpeedAtTwentyFeet = SpotSurfaceInputs::NOT_SET);
-
-    // SPOT Module Getters
-    double getMaxSpottingDistanceFromBurningPile();
-    double getMaxSpottingDistanceFromSurfaceFire();
-    double getMaxSpottingDistanceFromTorchingTrees();
+//  Safety Module
+Safety safety;
 
 private:
+    void memberwiseCopyAssignment(const BehaveRun& rhs);
+
     // Fuel model set (orginal 13, 40 and custom)
-    FuelModelSet* fuelModelSet_;    // This must point to a valid reference passed to the constructor
-
-    // SURFACE Module
-    Surface surface_;               // SURFACE Module object
-
-    // CROWN Module
-    Crown crown_;
-
-    // SPOT Module
-    Spot spot_;
+    FuelModelSet* fuelModelSet_;
 };
 
 #endif //BEHAVERUN_H

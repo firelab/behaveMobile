@@ -32,7 +32,6 @@ Flickable
         visible: false
         font.pointSize: myStyleModel.font.pointSize
         text: "Flame Length"
-
     }
 
     Text
@@ -64,7 +63,6 @@ Flickable
         {
             comboBoxCurrentIndex = fuelModelNumber - 88
         }
-
         return comboBoxCurrentIndex
     }
 
@@ -105,7 +103,6 @@ Flickable
             {
                 isInBounds = true
             }
-
             return isInBounds
         }
 
@@ -606,32 +603,34 @@ Flickable
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Calculate"
                 //style: myButtonStyle
-                font.pointSize: 40
-
                 property bool isAllInputInBounds: false
 
-                //height: calculateButton.text.height
-                //width: calculateButton.text.width
-                height: text.paintedWidth + 10
-                width: text.paintedWidth + 20
+                height: calculateButton.text.paintedHeight + 100
+                width: calculateButton.text.paintedWidth + 100
 
                 onClicked:
                 {
                     forceActiveFocus()
+                    isAllInputInBounds = checkIfAllInputInBounds()
 
-                    processInput(oneHourMoistureModel)
-                    processInput(tenHourMoistureModel)
-                    processInput(hundredHourMoistureModel)
-                    processInput(liveHerbaceousMoistureModel)
-                    processInput(liveWoodyMoistureModel)
-                    processInput(windSpeedModel)
-                    processInput(slopeModel)
-                    // Signal to behave to do calculations
-                    behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
-                    // Get needed outputs
-                    spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
-                    flameLengthText.text = Math.round(behave.flameLength * 10) / 10
+                    if(isAllInputInBounds)
+                    {
+                        // Process inputs
+                        processInput(oneHourMoistureModel)
+                        processInput(tenHourMoistureModel)
+                        processInput(hundredHourMoistureModel)
+                        processInput(liveHerbaceousMoistureModel)
+                        processInput(liveWoodyMoistureModel)
+                        processInput(windSpeedModel)
+                        processInput(slopeModel)
 
+                        // Signal to behave to do calculations
+                        behave.userInputChanged("Calculate", BehaveQML.CalculateSignal)
+
+                        // Get needed outputs
+                        spreadRateText.text = Math.round(behave.spreadRate * 10) / 10
+                        flameLengthText.text = Math.round(behave.flameLength * 10) / 10
+                    }
                     textInputContainer.forceActiveFocus()
                 }
             }
@@ -671,7 +670,7 @@ Flickable
                 text: spreadRateModel.text
                 font.pointSize: myStyleModel.font.pointSize
                 width: fittedTextBoxWidth
-                color: "white"
+                color: "black"
                 readOnly: true
             }
         }
@@ -710,7 +709,7 @@ Flickable
                 font.pointSize: myStyleModel.font.pointSize
                 text:  flameLengthModel.text
                 width: fittedTextBoxWidth
-                color: "white"
+                color: "black"
                 readOnly: true
             }
         }

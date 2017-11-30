@@ -31,21 +31,25 @@
 #ifndef WINDADJUSTMENTFACTOR_H
 #define WINDADJUSTMENTFACTOR_H
 
-#include "surfaceEnums.h"
+#include "surfaceInputs.h"
 
 class WindAjustmentFactor
 {
 public:
     WindAjustmentFactor();
-    double calculateWindAdjustmentFactor(double canopyCover, double canopyHeight,
+    double calculateWindAdjustmentFactorWithCrownRatio(double canopyCover, double canopyHeight,
         double crownRatio, double fuelBedDepth);
+    double calculateWindAdjustmentFactorWithoutCrownRatio(double canopyCover, double canopyHeight,
+        double fuelBedDepth);
     double getCanopyCrownFraction() const;
-    WindAdjustmentFactorMethod::WindAdjustmentFactorMethodEnum getWindAdjustmentFactorMethod() const;
+    WindAdjustmentFactorShelterMethod::WindAdjustmentFactorShelterMethodEnum getWindAdjustmentFactorShelterMethod() const;
 
 private:
+    void calculateWindAdjustmentFactorShelterMethod(const double canopyCover, const double canopyHeight, const double fuelbedDepth);
+    void applyLogProfile(const double canopyCover, const double canopyHeight, const double fuelbedDepth);
     double	windAdjustmentFactor_;
     double	canopyCrownFraction_;
-    WindAdjustmentFactorMethod::WindAdjustmentFactorMethodEnum windAdjustmentFactorMethod_;
+    WindAdjustmentFactorShelterMethod::WindAdjustmentFactorShelterMethodEnum windAdjustmentFactorShelterMethod_;
 };
 
 #endif // WINDADJUSTMENTFACTOR_H

@@ -31,7 +31,7 @@
 #ifndef SURFACEFIREREACTIONINTENSITY_H
 #define SURFACEFIREREACTIONINTENSITY_H
 
-#include "surfaceEnums.h"
+#include "surfaceInputs.h"
 
 class SurfaceFuelbedIntermediates;
 
@@ -39,8 +39,8 @@ class SurfaceFireReactionIntensity
 {
 public:
     SurfaceFireReactionIntensity();
-    SurfaceFireReactionIntensity(const SurfaceFireReactionIntensity &rhs);
-    SurfaceFireReactionIntensity& operator= (const SurfaceFireReactionIntensity& rhs);
+    SurfaceFireReactionIntensity(const SurfaceFireReactionIntensity& rhs);
+    SurfaceFireReactionIntensity& operator=(const SurfaceFireReactionIntensity& rhs);
     SurfaceFireReactionIntensity(const SurfaceFuelbedIntermediates& surfaceFuelbedIntermediates);
 
     double calculateReactionIntensity();
@@ -49,9 +49,11 @@ public:
     double getReactionIntensity() const;
 
 private:
-    double etaM_[FuelConstants::MAX_LIFE_STATES];                           //< Moisture damping coefficient for  i-th categort (dead/live)
-    double etaS_[FuelConstants::MAX_LIFE_STATES];                           //< Mineral(silica) damping coefficient for i - th categort(dead / live)
-    double reactionIntensityForLifeState_[FuelConstants::MAX_LIFE_STATES];  //< Reaction intensity for i-th category (dead/live)
+    void memberwiseCopyAssignment(const SurfaceFireReactionIntensity& rhs);
+
+    double etaM_[SurfaceInputs::FuelConstants::MAX_LIFE_STATES];                           //< Moisture damping coefficient for  i-th categort (dead/live)
+    double etaS_[SurfaceInputs::FuelConstants::MAX_LIFE_STATES];                           //< Mineral(silica) damping coefficient for i - th categort(dead / live)
+    double reactionIntensityForLifeState_[SurfaceInputs::FuelConstants::MAX_LIFE_STATES];  //< Reaction intensity for i-th category (dead/live)
     double reactionIntensity_;                                              //< Reaction Intensity, Rothermel 1972, equation 27
 
     const SurfaceFuelbedIntermediates* surfaceFuelbedIntermediates_;
